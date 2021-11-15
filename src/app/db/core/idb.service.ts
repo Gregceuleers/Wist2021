@@ -43,7 +43,10 @@ export class IdbService {
     playersDB.forEach(playersDB => {
       this._dbPromise?.put("players", playersDB);
     })
-    this._playersSubject.next(playersDB);
+    this._dbPromise?.getAllFromIndex('players', 'by-name').then(result => {
+      this._playersSubject.next(result);
+    })
+
 
   }
 
