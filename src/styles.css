@@ -1,2 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-
+.p-card {
+  background-image: url("./assets/images/cartes.webp");
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  background-size: 10%;
+}

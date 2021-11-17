@@ -1,1 +1,12 @@
-<p>home works!</p>
+<p-card header="WIST {{today | date : 'YYYY'}}" subheader="Card Subheader" [style]="{width: '100%', margin: '0 auto'}" styleClass="p-card-shadow">
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+    quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+  <ng-template pTemplate="Card Subheader">
+    <p-avatar image="assets/images/cartes.webp" styleClass="p-mr-2" size="xlarge" shape="square"></p-avatar>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button label="Save" icon="pi pi-check"></p-button>
+    <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>
+  </ng-template>
+</p-card>
+
