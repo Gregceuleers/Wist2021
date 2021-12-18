@@ -4,6 +4,9 @@ import { MenubarModule } from 'primeng/menubar';
 import { CardModule} from 'primeng/card';
 import { ButtonModule} from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
+import {StepsModule} from "primeng/steps";
+import {MessageModule} from "primeng/message";
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
   declarations: [],
@@ -12,13 +15,19 @@ import { AvatarModule } from 'primeng/avatar';
     MenubarModule,
     CardModule,
     ButtonModule,
-    AvatarModule
+    AvatarModule,
+    StepsModule,
+    MessageModule,
+    ToastModule
 
   ], exports: [
     MenubarModule,
     CardModule,
     ButtonModule,
-    AvatarModule
+    AvatarModule,
+    StepsModule,
+    MessageModule,
+    ToastModule
   ]
 })
 export class PrimeConfigModule { }

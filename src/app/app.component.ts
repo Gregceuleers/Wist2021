@@ -16,7 +16,7 @@ export class AppComponent implements OnInit, OnDestroy{
     {
       label: 'Accueil',
       icon: 'pi pi-fw pi-home',
-      routerLink: ''
+      routerLink: '/'
     },
     {
       label: 'Parties',
@@ -25,6 +25,7 @@ export class AppComponent implements OnInit, OnDestroy{
         {
           label: 'Nouvelle Partie',
           icon: 'pi pi-fw pi-plus',
+          routerLink: '/partie'
         },
         {
           label: 'Tableau',
