@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {IdbService} from "../../db/core/idb.service";
 import {Player} from "../../db/models/player";
 import {GameService} from "../../db/services/game.service";
+import {PlayerService} from "../../db/services/player.service";
 
 @Component({
   selector: 'app-selection-joueurs',
@@ -20,7 +20,7 @@ export class SelectionJoueursComponent implements OnInit {
   constructor(
     private router: Router,
     private builder: FormBuilder,
-    private iDBService: IdbService,
+    private playerService: PlayerService,
     private gameService: GameService
   ) {
     this.form = this.builder.group({
@@ -29,9 +29,7 @@ export class SelectionJoueursComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.iDBService.dataPlayers().subscribe(players => {
-      this.players = players;
-    })
+    this.playerService.getAllPlayers()?.then(p => this.players = p);
   }
 
   nextPage(): void {

@@ -1,17 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IdbService} from "./db/core/idb.service";
-import {Subscription} from "rxjs";
-import { MenuItem } from 'primeng/api';
+import {MenuItem} from 'primeng/api';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy{
+export class AppComponent implements OnInit{
   title = 'Wist2021';
 
-  dataPlayersSubscription: Subscription | undefined;
   items: MenuItem[] = [
     {
       label: 'Accueil',
@@ -52,12 +50,6 @@ export class AppComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.dbService.connectToIDB().then();
-    this.dataPlayersSubscription = this.dbService.dataPlayers().subscribe(data => console.log(data));
   }
 
-  ngOnDestroy(): void {
-    if (this.dataPlayersSubscription) {
-      this.dataPlayersSubscription.unsubscribe();
-    }
-  }
 }

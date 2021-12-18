@@ -12,8 +12,8 @@ import {Game} from "../models/game";
 })
 export class IdbService {
 
-  private _playersSubject: Subject<Player[]> = new Subject<Player[]>();
-  private _gamesSubject: Subject<Game[]> = new Subject<Game[]>();
+  // private _playersSubject: Subject<Player[]> = new Subject<Player[]>();
+  // private _gamesSubject: Subject<Game[]> = new Subject<Game[]>();
   private _dbPromise: IDBPDatabase<WistDBSchema> | undefined;
 
 
@@ -51,16 +51,16 @@ export class IdbService {
     playersDB.forEach(playersDB => {
       this._dbPromise?.put("players", playersDB);
     })
-    this._dbPromise?.getAllFromIndex('players', 'by-name').then(result => {
-      this._playersSubject.next(result);
-    })
+    // this._dbPromise?.getAllFromIndex('players', 'by-name').then(result => {
+    //   this._playersSubject.next(result);
+    // })
 
 
   }
 
-  dataPlayers(): Observable<Player[]> {
-    return this._playersSubject.asObservable();
-  }
+  // dataPlayers(): Observable<Player[]> {
+  //   return this._playersSubject.asObservable();
+  // }
 
   iDB(): IDBPDatabase<WistDBSchema> | undefined {
     return this._dbPromise;
