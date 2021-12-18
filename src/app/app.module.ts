@@ -13,6 +13,7 @@ import { SelectionJoueursComponent } from './partie/selection-joueurs/selection-
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
 import { NombrePartiesComponent } from './partie/nombre-parties/nombre-parties.component';
+import { ConfirmationPartieComponent } from './partie/confirmation-partie/confirmation-partie.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { NombrePartiesComponent } from './partie/nombre-parties/nombre-parties.c
     PartieComponent,
     SelectionJoueursComponent,
     NombrePartiesComponent,
+    ConfirmationPartieComponent,
   ],
   imports: [
     BrowserModule,

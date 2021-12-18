@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {Game} from "../../db/models/game";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {IdbService} from "../../db/core/idb.service";
 import {Player} from "../../db/models/player";
 import {GameService} from "../../db/services/game.service";

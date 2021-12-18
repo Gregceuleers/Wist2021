@@ -5,6 +5,7 @@ import { HomeComponent } from '../home/home.component';
 import {PartieComponent} from "../partie/partie.component";
 import {SelectionJoueursComponent} from "../partie/selection-joueurs/selection-joueurs.component";
 import {NombrePartiesComponent} from "../partie/nombre-parties/nombre-parties.component";
+import {ConfirmationPartieComponent} from "../partie/confirmation-partie/confirmation-partie.component";
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
       {
         path: 'nombreParties',
         component: NombrePartiesComponent
+      },
+      {
+        path: 'confirmation',
+        component: ConfirmationPartieComponent
       }
     ]
   }

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {GameService} from "../../db/services/game.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-nombre-parties',
@@ -7,9 +10,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NombrePartiesComponent implements OnInit {
 
-  constructor() { }
+  form: FormGroup;
+  nombreParties: any[] = [
+    { name: 12 },
+    { name: 18 },
+    { name: 24 },
+    { name: 32 },
+  ]
+
+  constructor(
+    private builder: FormBuilder,
+    private gameService: GameService,
+    private router: Router
+  ) {
+    this.form = this.builder.group({
+      nombreParties: []
+    })
+  }
 
   ngOnInit(): void {
   }
 
+  checkValidity(): void {
+
+  }
+
+  nextPage(): void {
+    const newGame = this.gameService.getNewGame();
+    newGame.gameNumbers = this.form.get('nombrePaties')?.value;
+    this.gameService.setNewGame(newGame);
+    this.router.navigate(['/partie/confirmation']).then();
+  }
+
+  prevPage(): void {
+    this.router.navigate(['/partie/']).then();
+  }
 }

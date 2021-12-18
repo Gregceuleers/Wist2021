@@ -1,1 +1,24 @@
-<p>nombre-parties works!</p>
+<div class="stepsdemo-content">
+  <p-card>
+    <ng-template pTemplate="title">
+      Nombre de parties de la session
+    </ng-template>
+    <ng-template pTemplate="subtitle">
+      Choisissez un nombre de parties qui vont composer la session de Wist
+    </ng-template>
+    <ng-template pTemplate="content">
+      <div class="p-fluid" [formGroup]="form">
+        <div class="p-field">
+          <p-dropdown inputId="player" [options]="nombreParties" (onChange)="checkValidity()" optionLabel="name" placeholder="" formControlName="nombreParties"></p-dropdown>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <div class="p-grid p-nogutter p-justify-end">
+        <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
+        <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+      </div>
+    </ng-template>
+  </p-card>
+</div>
+
