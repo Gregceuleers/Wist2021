@@ -1,7 +1,7 @@
 import {Player} from "./player";
 
 export interface Game {
-  id: number;
+  id?: number;
   players: Player[];
-  gameNumbers: number;
+  gameNumbers?: number;
 }

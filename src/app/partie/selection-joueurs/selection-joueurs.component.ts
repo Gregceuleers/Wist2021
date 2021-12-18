@@ -4,6 +4,7 @@ import {Game} from "../../db/models/game";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {IdbService} from "../../db/core/idb.service";
 import {Player} from "../../db/models/player";
+import {GameService} from "../../db/services/game.service";
 
 @Component({
   selector: 'app-selection-joueurs',
@@ -12,18 +13,17 @@ import {Player} from "../../db/models/player";
 })
 export class SelectionJoueursComponent implements OnInit {
 
-  newGame: Game | undefined;
   form: FormGroup;
 
   validStep = true;
-  firstname: FormControl = new FormControl('');
   players: Player[] = [];
   selectedPlayers: Player[] = [];
 
   constructor(
     private router: Router,
     private builder: FormBuilder,
-    private iDBService: IdbService
+    private iDBService: IdbService,
+    private gameService: GameService
   ) {
     this.form = this.builder.group({
       players: [],
@@ -37,6 +37,9 @@ export class SelectionJoueursComponent implements OnInit {
   }
 
   nextPage(): void {
+    this.gameService.setNewGame({
+      players: this.selectedPlayers,
+    })
     this.router.navigate(['partie/nombreParties']).then();
   }
 

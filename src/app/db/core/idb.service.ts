@@ -62,5 +62,9 @@ export class IdbService {
     return this._playersSubject.asObservable();
   }
 
+  iDB(): IDBPDatabase<WistDBSchema> | undefined {
+    return this._dbPromise;
+  }
+
 
 }
