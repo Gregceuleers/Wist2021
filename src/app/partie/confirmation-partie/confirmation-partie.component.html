@@ -1,1 +1,27 @@
-<p>confirmation-partie works!</p>
+<div class="stepsdemo-content">
+  <p-card>
+    <ng-template pTemplate="title">
+      Confirmation
+    </ng-template>
+    <ng-template pTemplate="subtitle">
+     Résumé de la nouvelle partie à créer
+    </ng-template>
+    <ng-template pTemplate="content">
+      <div class="p-field p-col-12">
+        <label>Joueurs</label>
+        <ul>
+          <li *ngFor="let p of newGameResume.players">{{p.name}}</li>
+        </ul>
+        <label>Nombre de parties</label>
+        <p>{{newGameResume.gameNumbers}}</p>
+      </div>
+
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <div class="p-grid p-nogutter p-justify-between">
+        <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
+        <p-button label="Complete" (onClick)="complete()" icon="pi pi-angle-right" iconPos="right" styleClass="p-button-success"></p-button>
+      </div>
+    </ng-template>
+  </p-card>
+</div>

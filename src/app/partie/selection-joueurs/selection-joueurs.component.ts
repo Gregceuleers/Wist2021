@@ -16,7 +16,6 @@ export class SelectionJoueursComponent implements OnInit {
 
   validStep = true;
   players: Player[] = [];
-  selectedPlayers: Player[] = [];
 
   constructor(
     private router: Router,
@@ -37,13 +36,14 @@ export class SelectionJoueursComponent implements OnInit {
 
   nextPage(): void {
     this.gameService.setNewGame({
-      players: this.selectedPlayers,
-    })
+      players: this.form.get('players')?.value,
+    });
+    console.log(this.gameService.getNewGame());
     this.router.navigate(['partie/nombreParties']).then();
   }
 
   checkValidity(): void {
     const selectedPlayers = this.form.get('players')?.value as Player[];
-    this.validStep = !(selectedPlayers.length >= 4 && this.selectedPlayers.length <= 5);
+    this.validStep = !(selectedPlayers.length >= 4 && selectedPlayers.length <= 5);
   }
 }

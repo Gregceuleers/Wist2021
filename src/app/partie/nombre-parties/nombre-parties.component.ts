@@ -12,10 +12,10 @@ export class NombrePartiesComponent implements OnInit {
 
   form: FormGroup;
   nombreParties: any[] = [
-    { name: 12 },
-    { name: 18 },
-    { name: 24 },
-    { name: 32 },
+    { name: '12', value:12 },
+    { name: '18', value: 18 },
+    { name: '24', value: 24 },
+    { name: '32', value: 32 },
   ]
 
   constructor(
@@ -37,7 +37,8 @@ export class NombrePartiesComponent implements OnInit {
 
   nextPage(): void {
     const newGame = this.gameService.getNewGame();
-    newGame.gameNumbers = this.form.get('nombrePaties')?.value;
+    newGame.gameNumbers = this.form.get('nombreParties')?.value.value;
+    console.log(newGame);
     this.gameService.setNewGame(newGame);
     this.router.navigate(['/partie/confirmation']).then();
   }
