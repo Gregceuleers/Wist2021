@@ -27,6 +27,7 @@ export class ConfirmationPartieComponent implements OnInit {
   }
 
   complete(): void {
+    // Add game in DB and redirect to home
     this.gameService.addGame();
   }
 }
