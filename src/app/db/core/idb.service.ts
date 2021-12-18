@@ -12,10 +12,7 @@ import {Game} from "../models/game";
 })
 export class IdbService {
 
-  // private _playersSubject: Subject<Player[]> = new Subject<Player[]>();
-  // private _gamesSubject: Subject<Game[]> = new Subject<Game[]>();
   private _dbPromise: IDBPDatabase<WistDBSchema> | undefined;
-
 
   constructor() {
   }
@@ -28,13 +25,13 @@ export class IdbService {
             keyPath: 'name',
             autoIncrement: true
           });
-           playerStore.createIndex('by-name', 'name');
+          playerStore.createIndex('by-name', 'name');
 
-           const gameStore = db.createObjectStore('games', {
-             keyPath: 'id',
-             autoIncrement: true
-           });
-           gameStore.createIndex('by-id', 'id');
+          const gameStore = db.createObjectStore('games', {
+            keyPath: 'id',
+            autoIncrement: true
+          });
+          gameStore.createIndex('by-id', 'id');
         }
 
       }
@@ -42,7 +39,8 @@ export class IdbService {
 
     await this.initData();
 
-    return new Promise(() => {});
+    return new Promise(() => {
+    });
 
 
   }
@@ -51,16 +49,9 @@ export class IdbService {
     playersDB.forEach(playersDB => {
       this._dbPromise?.put("players", playersDB);
     })
-    // this._dbPromise?.getAllFromIndex('players', 'by-name').then(result => {
-    //   this._playersSubject.next(result);
-    // })
 
 
   }
-
-  // dataPlayers(): Observable<Player[]> {
-  //   return this._playersSubject.asObservable();
-  // }
 
   iDB(): IDBPDatabase<WistDBSchema> | undefined {
     return this._dbPromise;

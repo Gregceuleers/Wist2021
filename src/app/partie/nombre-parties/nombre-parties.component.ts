@@ -24,7 +24,7 @@ export class NombrePartiesComponent implements OnInit {
     private router: Router
   ) {
     this.form = this.builder.group({
-      nombreParties: []
+      nombreParties: [{name: '12', value: 12}]
     })
   }
 
