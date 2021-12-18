@@ -7,6 +7,8 @@ import { AvatarModule } from 'primeng/avatar';
 import {StepsModule} from "primeng/steps";
 import {MessageModule} from "primeng/message";
 import {ToastModule} from "primeng/toast";
+import {DropdownModule} from "primeng/dropdown";
+import {MultiSelectModule} from "primeng/multiselect";
 
 @NgModule({
   declarations: [],
@@ -18,7 +20,9 @@ import {ToastModule} from "primeng/toast";
     AvatarModule,
     StepsModule,
     MessageModule,
-    ToastModule
+    ToastModule,
+    DropdownModule,
+    MultiSelectModule,
 
   ], exports: [
     MenubarModule,
@@ -27,7 +31,9 @@ import {ToastModule} from "primeng/toast";
     AvatarModule,
     StepsModule,
     MessageModule,
-    ToastModule
+    ToastModule,
+    DropdownModule,
+    MultiSelectModule
   ]
 })
 export class PrimeConfigModule { }

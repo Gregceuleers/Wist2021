@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
 import {PartieComponent} from "../partie/partie.component";
+import {SelectionJoueursComponent} from "../partie/selection-joueurs/selection-joueurs.component";
+import {NombrePartiesComponent} from "../partie/nombre-parties/nombre-parties.component";
 
 const routes: Routes = [
   {
@@ -11,7 +13,17 @@ const routes: Routes = [
   },
   {
     path: 'partie',
-    component: PartieComponent
+    component: PartieComponent,
+    children: [
+      {
+        path: '',
+        component: SelectionJoueursComponent
+      },
+      {
+        path: 'nombreParties',
+        component: NombrePartiesComponent
+      }
+    ]
   }
 ]
 

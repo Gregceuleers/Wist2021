@@ -1,5 +1,6 @@
 import {DBSchema} from "idb";
 import {Player} from "../models/player";
+import {Game} from "../models/game";
 
 export interface WistDBSchema extends DBSchema {
   'wist-database': {
@@ -10,5 +11,10 @@ export interface WistDBSchema extends DBSchema {
     value: Player;
     key: string;
     indexes: { 'by-name': string};
+  };
+  games: {
+    value: Game;
+    key: number;
+    indexes: {'by-id': number};
   }
 }

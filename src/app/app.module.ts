@@ -9,12 +9,18 @@ import {HomeComponent} from './home/home.component';
 import {PrimeConfigModule} from './prime/prime-config/prime-config.module';
 import {PartieComponent} from './partie/partie.component';
 import {MessageService} from "primeng/api";
+import { SelectionJoueursComponent } from './partie/selection-joueurs/selection-joueurs.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {InputTextModule} from "primeng/inputtext";
+import { NombrePartiesComponent } from './partie/nombre-parties/nombre-parties.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    PartieComponent
+    PartieComponent,
+    SelectionJoueursComponent,
+    NombrePartiesComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,6 +28,9 @@ import {MessageService} from "primeng/api";
     PrimeConfigModule,
     CommonModule,
     AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    InputTextModule,
   ],
   providers: [
     {

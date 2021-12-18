@@ -1,0 +1,22 @@
+<div class="stepsdemo-content">
+  <p-card>
+    <ng-template pTemplate="title">
+      Sélection des joueurs
+    </ng-template>
+    <ng-template pTemplate="subtitle">
+      Choisissez entre 4 et 5 joueurs qui vont participer à la partie
+    </ng-template>
+    <ng-template pTemplate="content">
+      <div class="p-fluid" [formGroup]="form">
+        <div class="p-field">
+          <p-multiSelect inputId="player" [options]="players" (onChange)="checkValidity()" optionLabel="name" placeholder="" formControlName="players"></p-multiSelect>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <div class="p-grid p-nogutter p-justify-end">
+        <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right" [disabled]="validStep"></p-button>
+      </div>
+    </ng-template>
+  </p-card>
+</div>

@@ -4,6 +4,7 @@ import {Player} from "../models/player";
 import {IDBPDatabase, openDB} from "idb";
 import {WistDBSchema} from "./wist-dbschema";
 import {playersDB} from "../models/player";
+import {Game} from "../models/game";
 
 
 @Injectable({
@@ -12,6 +13,7 @@ import {playersDB} from "../models/player";
 export class IdbService {
 
   private _playersSubject: Subject<Player[]> = new Subject<Player[]>();
+  private _gamesSubject: Subject<Game[]> = new Subject<Game[]>();
   private _dbPromise: IDBPDatabase<WistDBSchema> | undefined;
 
 
@@ -27,6 +29,12 @@ export class IdbService {
             autoIncrement: true
           });
            playerStore.createIndex('by-name', 'name');
+
+           const gameStore = db.createObjectStore('games', {
+             keyPath: 'id',
+             autoIncrement: true
+           });
+           gameStore.createIndex('by-id', 'id');
         }
 
       }
