@@ -1,0 +1,29 @@
+.p-card-body {
+  background-image: url("/assets/images/cartes.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.infos {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+}
+.infos-card {
+  max-width: 33%;
+  width: 33%;
+}
+
+@media screen and (max-width : 640px){
+  .infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .infos-card {
+    max-width: 100%;
+    width: 100%;
+  }
+}

@@ -1,12 +1,15 @@
-<p-card header="WIST {{today | date : 'YYYY'}}" subheader="Card Subheader" [style]="{width: '100%', margin: '0 auto'}" styleClass="p-card-shadow">
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-    quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
-  <ng-template pTemplate="Card Subheader">
-    <p-avatar image="assets/images/cartes.webp" styleClass="p-mr-2" size="xlarge" shape="square"></p-avatar>
-  </ng-template>
-  <ng-template pTemplate="footer">
-    <p-button label="Save" icon="pi pi-check"></p-button>
-    <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>
-  </ng-template>
+<p-card header="WIST {{today | date : 'YYYY'}}" subheader="Gestion du groupe de Wist" [style]="{width: '100%', margin: '0 auto'}" styleClass="p-card-shadow">
+  <p><u><b>Objectif</b></u> : arriver 1er à 50 points<br><u><b>Comment ?</b></u> en participant au tournoi ouvert de Wist</p>
+
+  <div class="infos">
+    <p-card header="Tableau des résultats" class="infos-card">
+
+    </p-card>
+    <p-card header="Parties jouées" class="infos-card"></p-card>
+    <p-card header="Règles" class="infos-card"></p-card>
+  </div>
+<!--  <ng-template pTemplate="header">-->
+<!--    <img src="assets/images/cartes.webp" class="p-mr-2">-->
+<!--  </ng-template>-->
 </p-card>
 

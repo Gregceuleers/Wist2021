@@ -26,7 +26,7 @@ export const playersDB: Player[] = [
   {
     id: 3,
     name: 'Joël',
-    pseudo: 'Maniko',
+    pseudo: 'Poulet',
     email: 'jo.maniko@gmail.com',
     nbPartiesJouees: 0,
     totalPoints: 0
@@ -36,6 +36,14 @@ export const playersDB: Player[] = [
     name: 'Manu',
     pseudo: 'Manolo',
     email: 'emmanuelhortmanns@gmail.com',
+    nbPartiesJouees: 0,
+    totalPoints: 0
+  },
+  {
+    id: 5,
+    name: 'Patrice',
+    pseudo: 'Patou',
+    email: 'patricegerlache@gmail.com',
     nbPartiesJouees: 0,
     totalPoints: 0
   }
