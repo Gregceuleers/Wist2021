@@ -34,12 +34,7 @@ import { ConfirmationPartieComponent } from './partie/confirmation-partie/confir
     ReactiveFormsModule,
     InputTextModule,
   ],
-  providers: [
-    {
-      provide: MessageService,
-      multi: false,
-    }
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
