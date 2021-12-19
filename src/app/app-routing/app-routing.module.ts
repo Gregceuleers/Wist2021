@@ -18,6 +18,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        redirectTo: '/partie/selectJoueurs',
+        pathMatch: 'full'
+      },
+      {
+        path: 'selectJoueurs',
         component: SelectionJoueursComponent
       },
       {

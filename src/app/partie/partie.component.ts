@@ -14,9 +14,9 @@ export class PartieComponent implements OnInit, OnDestroy {
   newGameCreated: Subscription | undefined;
 
   steps: MenuItem[] = [
-    {label: 'Joueurs'},
-    {label: 'Nombre de parties'},
-    {label: 'Confirmation'}
+    {label: 'Joueurs', routerLink: 'selectJoueurs'},
+    {label: 'Nombre de parties', routerLink: 'nombreParties'},
+    {label: 'Confirmation', routerLink: 'confirmation'}
   ];
 
   constructor(
@@ -35,8 +35,10 @@ export class PartieComponent implements OnInit, OnDestroy {
     this.newGameCreated = this.gameService.newGame$.subscribe(g => {
       console.log(g);
       this.messageService.add({
+        key: 'message',
         severity: 'success',
         summary: 'Nouvelle partie créée',
+        detail: '',
         data: g
       })
     })
