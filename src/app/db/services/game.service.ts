@@ -39,6 +39,6 @@ export class GameService {
       gameNumbers: 0
     } as Game;
 
-    this.router.navigate(['/partie']).then();
+    this.router.navigate(['/']).then();
   }
 }

@@ -1,17 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {MenuItem, MessageService} from "primeng/api";
-import {Subscription} from "rxjs";
-import {GameService} from "../db/services/game.service";
+import {Component, OnInit} from '@angular/core';
+import {MenuItem} from "primeng/api";
 
 @Component({
   selector: 'app-partie',
   templateUrl: './partie.component.html',
   styleUrls: ['./partie.component.css'],
-  providers: [MessageService]
 })
-export class PartieComponent implements OnInit, OnDestroy {
-
-  newGameCreated: Subscription | undefined;
+export class PartieComponent implements OnInit {
 
   steps: MenuItem[] = [
     {label: 'Joueurs', routerLink: 'selectJoueurs'},
@@ -20,28 +15,10 @@ export class PartieComponent implements OnInit, OnDestroy {
   ];
 
   constructor(
-    private messageService: MessageService,
-    private gameService: GameService
-    ) {
-  }
-
-  ngOnDestroy(): void {
-        if (this.newGameCreated) {
-          this.newGameCreated.unsubscribe();
-        }
-    }
+    ) { }
 
   ngOnInit(): void {
-    this.newGameCreated = this.gameService.newGame$.subscribe(g => {
-      console.log(g);
-      this.messageService.add({
-        key: 'message',
-        severity: 'success',
-        summary: 'Nouvelle partie créée',
-        detail: '',
-        data: g
-      })
-    })
+
   }
 
 }

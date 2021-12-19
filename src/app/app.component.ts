@@ -1,13 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IdbService} from "./db/core/idb.service";
-import {MenuItem} from 'primeng/api';
+import {MenuItem, MessageService} from 'primeng/api';
+import {Subscription} from "rxjs";
+import {GameService} from "./db/services/game.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [MessageService]
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, OnDestroy{
   title = 'Wist2021';
 
   items: MenuItem[] = [
@@ -42,14 +45,36 @@ export class AppComponent implements OnInit{
 
   ];
 
+  newGameCreated: Subscription | undefined;
+
+
   constructor(
-    private dbService: IdbService
+    private dbService: IdbService,
+    private messageService: MessageService,
+    private gameService: GameService
   ) {
 
   }
 
   ngOnInit(): void {
     this.dbService.connectToIDB().then();
+
+    this.newGameCreated = this.gameService.newGame$.subscribe(g => {
+      console.log(g);
+      this.messageService.add({
+        key: 'message',
+        severity: 'success',
+        summary: 'Nouvelle partie créée',
+        detail: '',
+        data: g
+      })
+    })
+  }
+
+  ngOnDestroy(): void {
+    if (this.newGameCreated) {
+      this.newGameCreated.unsubscribe();
+    }
   }
 
 }
