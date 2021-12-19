@@ -20,11 +20,11 @@ export class AppComponent implements OnInit, OnDestroy{
       routerLink: '/'
     },
     {
-      label: 'Parties',
+      label: 'Jeu',
       icon: 'pi pi-fw pi-heart',
       items: [
         {
-          label: 'Nouvelle Partie',
+          label: 'Nouveau Jeu',
           icon: 'pi pi-fw pi-plus',
           routerLink: '/partie'
         },
