@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {Player} from "../../db/models/player";
 import {GameService} from "../../db/services/game.service";
 import {PlayerService} from "../../db/services/player.service";
+import {GameState} from "../../db/models/game";
 
 @Component({
   selector: 'app-selection-joueurs',
@@ -35,6 +36,7 @@ export class SelectionJoueursComponent implements OnInit {
   nextPage(): void {
     this.gameService.setNewGame({
       players: this.form.get('players')?.value,
+      state: GameState.CREATION
     });
     console.log(this.gameService.getNewGame());
     this.router.navigate(['partie/nombreParties']).then();
