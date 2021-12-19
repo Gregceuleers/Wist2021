@@ -8,11 +8,9 @@
     </ng-template>
     <ng-template pTemplate="content">
       <div class="p-field p-col-12">
-        <label>Joueurs</label>
-        <ul>
-          <li *ngFor="let p of newGameResume.players">{{p.name}}</li>
-        </ul>
-        <label>Nombre de parties</label>
+        <p><b><u>Joueurs</u></b></p>
+        <p-listbox [options]="newGameResume.players" optionLabel="name" [disabled]="true"></p-listbox>
+        <p><b><u>Nombre de parties</u></b></p>
         <p>{{newGameResume.gameNumbers}}</p>
       </div>
 
