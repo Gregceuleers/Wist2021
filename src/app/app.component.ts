@@ -10,7 +10,7 @@ import {GameService} from "./db/services/game.service";
   styleUrls: ['./app.component.css'],
   providers: [MessageService]
 })
-export class AppComponent implements OnInit, OnDestroy{
+export class AppComponent implements OnInit, OnDestroy {
   title = 'Wist2021';
 
   items: MenuItem[] = [
@@ -27,6 +27,12 @@ export class AppComponent implements OnInit, OnDestroy{
           label: 'Nouveau Jeu',
           icon: 'pi pi-fw pi-plus',
           routerLink: '/partie'
+        },
+        {
+          label: 'Partie en cours',
+          icon: 'pi pi-fw pi-play',
+          routerLink: '/encours',
+          disabled: true
         },
         {
           label: 'Tableau',
@@ -46,7 +52,7 @@ export class AppComponent implements OnInit, OnDestroy{
   ];
 
   newGameCreated: Subscription | undefined;
-
+  currentGame: Subscription | undefined;
 
   constructor(
     private dbService: IdbService,
@@ -59,6 +65,11 @@ export class AppComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.dbService.connectToIDB().then();
 
+    this.currentGame = this.gameService.currentGame$.subscribe(g => {
+      console.log(g);
+    })
+
+
     this.newGameCreated = this.gameService.newGame$.subscribe(g => {
       console.log(g);
       this.messageService.add({
@@ -69,11 +80,16 @@ export class AppComponent implements OnInit, OnDestroy{
         data: g
       })
     })
+
+
   }
 
   ngOnDestroy(): void {
     if (this.newGameCreated) {
       this.newGameCreated.unsubscribe();
+    }
+    if (this.currentGame) {
+      this.currentGame.unsubscribe();
     }
   }
 

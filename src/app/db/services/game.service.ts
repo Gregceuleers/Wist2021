@@ -44,4 +44,15 @@ export class GameService {
 
     this.router.navigate(['/']).then();
   }
+
+  // getCurrentGame(): void {
+  //    this.iDBService.iDB()?.getAllFromIndex('games', 'by-id').then(result => {
+  //     result.forEach(game => {
+  //       if (game.state === GameState.EN_COURS) {
+  //         this.currentGame$.next(game);
+  //         console.log(game);
+  //       }
+  //     })
+  //   });
+  // }
 }

@@ -10,7 +10,7 @@ export class PartieComponent implements OnInit {
 
   steps: MenuItem[] = [
     {label: 'Joueurs', routerLink: 'selectJoueurs'},
-    {label: 'Nombre de parties', routerLink: 'nombreParties'},
+    {label: 'Nombre de manches', routerLink: 'nombreParties'},
     {label: 'Confirmation', routerLink: 'confirmation'}
   ];
 
