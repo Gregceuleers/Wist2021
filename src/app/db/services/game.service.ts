@@ -3,6 +3,7 @@ import {IdbService} from "../core/idb.service";
 import {Game, GameState} from "../models/game";
 import {Router} from "@angular/router";
 import {Subject} from "rxjs";
+import {Frame} from "../models/frame";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class GameService {
 
   private _newGame: Game = {
     players: [],
-    gameNumbers: 0
+    gameNumbers: 0,
+    frames: []
   }
 
   constructor(
@@ -39,7 +41,8 @@ export class GameService {
     // Reset
     this._newGame = {
       players: [],
-      gameNumbers: 0
+      gameNumbers: 0,
+      frames: [] as Frame[]
     } as Game;
 
     this.router.navigate(['/']).then();

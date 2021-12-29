@@ -1,10 +1,12 @@
 import {Player} from "./player";
+import {Frame} from "./frame";
 
 export interface Game {
   id?: number;
   players: Player[];
   gameNumbers?: number;
-  state?: GameState
+  state?: GameState;
+  frames: Frame[];
 }
 export enum GameState {
   CREATION,

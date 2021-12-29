@@ -36,7 +36,8 @@ export class SelectionJoueursComponent implements OnInit {
   nextPage(): void {
     this.gameService.setNewGame({
       players: this.form.get('players')?.value,
-      state: GameState.CREATION
+      state: GameState.CREATION,
+      frames: []
     });
     console.log(this.gameService.getNewGame());
     this.router.navigate(['partie/nombreParties']).then();
