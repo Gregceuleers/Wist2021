@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {IdbService} from "../core/idb.service";
 import {Game, GameState} from "../models/game";
 import {Observable, Subject} from "rxjs";
 import {Frame} from "../models/frame";
@@ -20,7 +19,7 @@ export class GameService {
     players: [],
     framesNumber: 0,
     frames: [],
-    currentFrame: 1
+    currentFrame: 0
   }
 
   constructor(
@@ -47,7 +46,7 @@ export class GameService {
       players: [],
       framesNumber: 0,
       frames: [] as Frame[],
-      currentFrame: 1
+      currentFrame: 0
     } as Game;
 
     return this.httpClient.post<Boolean>(BaseURL + "games", inserted);

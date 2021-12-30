@@ -17,6 +17,7 @@ import {ConfirmationPartieComponent} from './partie/confirmation-partie/confirma
 import {PartieEnCoursComponent} from './partie/partie-en-cours/partie-en-cours.component';
 import {HttpClientModule} from "@angular/common/http";
 import localeFr from '@angular/common/locales/fr';
+import { TotauxPartieComponent } from './partie/partie-en-cours/totaux-partie/totaux-partie.component';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -29,6 +30,7 @@ registerLocaleData(localeFr, 'fr');
     NombrePartiesComponent,
     ConfirmationPartieComponent,
     PartieEnCoursComponent,
+    TotauxPartieComponent,
   ],
   imports: [
     BrowserModule,

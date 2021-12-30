@@ -39,7 +39,7 @@ export class SelectionJoueursComponent implements OnInit {
       state: GameState.CREATION,
       frames: [],
       framesNumber: 0,
-      currentFrame: 1
+      currentFrame: 0
     });
     console.log(this.gameService.getNewGame());
     this.router.navigate(['partie/nombreParties']).then();

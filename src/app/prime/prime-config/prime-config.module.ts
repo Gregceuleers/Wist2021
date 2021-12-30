@@ -11,6 +11,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {MultiSelectModule} from "primeng/multiselect";
 import {ListboxModule} from "primeng/listbox";
 import {KnobModule} from "primeng/knob";
+import {SelectButtonModule} from "primeng/selectbutton";
 
 @NgModule({
   declarations: [],
@@ -26,7 +27,8 @@ import {KnobModule} from "primeng/knob";
     DropdownModule,
     MultiSelectModule,
     ListboxModule,
-    KnobModule
+    KnobModule,
+    SelectButtonModule
   ], exports: [
     MenubarModule,
     CardModule,
@@ -38,7 +40,8 @@ import {KnobModule} from "primeng/knob";
     DropdownModule,
     MultiSelectModule,
     ListboxModule,
-    KnobModule
+    KnobModule,
+    SelectButtonModule
   ]
 })
 export class PrimeConfigModule { }
