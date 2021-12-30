@@ -6,6 +6,7 @@ export interface Game {
   players: Player[];
   framesNumber?: number;
   state?: GameState;
+  created?: Date;
   frames: Frame[];
 }
 export enum GameState {
