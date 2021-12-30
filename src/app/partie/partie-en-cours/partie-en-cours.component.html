@@ -1,3 +1,18 @@
-<p-card header="Partie du {{currentGame?.created | date : 'dd MMMM'}}" [style]="{width: '100%', margin: '0 auto'}" styleClass="p-card-shadow">
+<ng-container *ngIf="currentGame">
+  <p-card header="Partie du {{currentGame?.created | date : 'dd MMMM'}}" [style]="{width: '100%', margin: '0 auto'}"
+          styleClass="p-card-shadow">
+    <h3>Manches</h3>
+    <p-knob [(ngModel)]="currentGame.currentFrame" [max]="currentGame.framesNumber" name="Nombre de manches jouées"
+            valueTemplate="{value}/{{currentGame.framesNumber}}">
 
-</p-card>
+    </p-knob>
+    <h3>Sélection du donneur</h3>
+
+
+  </p-card>
+</ng-container>
+<ng-container *ngIf="!currentGame">
+  <p-card>
+    <h3>Aucune partie en cours ...</h3>
+  </p-card>
+</ng-container>

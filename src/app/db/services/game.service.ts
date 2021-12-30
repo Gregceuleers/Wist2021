@@ -19,7 +19,8 @@ export class GameService {
   private _newGame: Game = {
     players: [],
     framesNumber: 0,
-    frames: []
+    frames: [],
+    currentFrame: 1
   }
 
   constructor(
@@ -45,7 +46,8 @@ export class GameService {
     this._newGame = {
       players: [],
       framesNumber: 0,
-      frames: [] as Frame[]
+      frames: [] as Frame[],
+      currentFrame: 1
     } as Game;
 
     return this.httpClient.post<Boolean>(BaseURL + "games", inserted);

@@ -4,10 +4,11 @@ import {Frame} from "./frame";
 export interface Game {
   id?: number;
   players: Player[];
-  framesNumber?: number;
+  framesNumber: number;
   state?: GameState;
   created?: Date;
   frames: Frame[];
+  currentFrame: number;
 }
 export enum GameState {
   CREATION,

@@ -10,6 +10,7 @@ import {ToastModule} from "primeng/toast";
 import {DropdownModule} from "primeng/dropdown";
 import {MultiSelectModule} from "primeng/multiselect";
 import {ListboxModule} from "primeng/listbox";
+import {KnobModule} from "primeng/knob";
 
 @NgModule({
   declarations: [],
@@ -24,8 +25,8 @@ import {ListboxModule} from "primeng/listbox";
     ToastModule,
     DropdownModule,
     MultiSelectModule,
-    ListboxModule
-
+    ListboxModule,
+    KnobModule
   ], exports: [
     MenubarModule,
     CardModule,
@@ -36,7 +37,8 @@ import {ListboxModule} from "primeng/listbox";
     ToastModule,
     DropdownModule,
     MultiSelectModule,
-    ListboxModule
+    ListboxModule,
+    KnobModule
   ]
 })
 export class PrimeConfigModule { }
