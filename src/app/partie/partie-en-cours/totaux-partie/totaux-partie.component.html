@@ -1,1 +1,11 @@
-<p>totaux-partie works!</p>
+<p-table [value]="frames" responsiveLayout="scroll" [resizableColumns]="true">
+  <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let p of players">{{p.name}}</th>
+        <th>Total</th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-frame>
+
+  </ng-template>
+</p-table>

@@ -1,1 +1,21 @@
-<p>frame works!</p>
+<p-card subheader="Manche 1">
+  <ng-container *ngIf="players">
+    <h3>Donneur : {{players[index - 1].name}}</h3>
+    <ng-container *ngIf="form">
+      <div class="p-fluid" [formGroup]="form">
+        <h4>Type de jeu</h4>
+        <p-treeSelect [options]="typesGame" formControlName="typeGame" selectionMode="single"></p-treeSelect>
+        <h4>Joueur(s)</h4>
+        <div class="p-field">
+          <p-multiSelect inputId="player" [options]="players" (onChange)="checkValidity()" optionLabel="name"
+                         placeholder="" formControlName="players"></p-multiSelect>
+        </div>
+        <div class="buttons">
+          <p-button label="Réussite" icon="pi pi-check-circle" iconPos="right" styleClass="p-button-success"></p-button>
+          <p-button label="Echec" icon="pi pi-times-circle" iconPos="right" styleClass="p-button-danger"></p-button>
+
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</p-card>

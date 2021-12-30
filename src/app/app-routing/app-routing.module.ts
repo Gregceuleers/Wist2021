@@ -39,13 +39,7 @@ const routes: Routes = [
   },
   {
     path: 'partieEnCours',
-    component: PartieEnCoursComponent,
-    children: [
-      {
-        path: ':id',
-        component: FrameComponent
-      }
-    ]
+    component: PartieEnCoursComponent
   }
 ]
 

@@ -12,6 +12,7 @@ export class PartieEnCoursComponent implements OnInit {
 
   currentGame: Game | undefined;
   dealer: Player | undefined;
+  showGame = false;
 
   constructor(
     private gameService: GameService
@@ -21,6 +22,9 @@ export class PartieEnCoursComponent implements OnInit {
   ngOnInit(): void {
     this.gameService.getCurrentGame().subscribe(result => {
       this.currentGame = result;
+      if (this.currentGame !== null && this.currentGame.currentFrame > 0) {
+        this.showGame = true;
+      }
 
     })
   }
@@ -38,6 +42,7 @@ export class PartieEnCoursComponent implements OnInit {
 
         }, this.currentGame.id ? this.currentGame.id : 0).subscribe(game => {
           this.currentGame = game;
+          this.showGame = true;
           console.log(this.currentGame);
         })
       });

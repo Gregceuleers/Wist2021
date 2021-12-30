@@ -12,6 +12,8 @@ import {MultiSelectModule} from "primeng/multiselect";
 import {ListboxModule} from "primeng/listbox";
 import {KnobModule} from "primeng/knob";
 import {SelectButtonModule} from "primeng/selectbutton";
+import {TableModule} from "primeng/table";
+import {TreeSelectModule} from "primeng/treeselect";
 
 @NgModule({
   declarations: [],
@@ -28,7 +30,9 @@ import {SelectButtonModule} from "primeng/selectbutton";
     MultiSelectModule,
     ListboxModule,
     KnobModule,
-    SelectButtonModule
+    SelectButtonModule,
+    TableModule,
+    TreeSelectModule
   ], exports: [
     MenubarModule,
     CardModule,
@@ -41,7 +45,9 @@ import {SelectButtonModule} from "primeng/selectbutton";
     MultiSelectModule,
     ListboxModule,
     KnobModule,
-    SelectButtonModule
+    SelectButtonModule,
+    TableModule,
+    TreeSelectModule
   ]
 })
 export class PrimeConfigModule { }

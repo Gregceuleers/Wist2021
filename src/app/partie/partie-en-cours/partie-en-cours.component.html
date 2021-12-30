@@ -1,6 +1,7 @@
 <ng-container *ngIf="currentGame">
-  <p-card header="Partie du {{currentGame.created | date : 'dd MMMM'}}" [style]="{width: '100%', margin: '0 auto'}"
+  <p-card header="Partie du {{currentGame.created | date : 'dd MMMM YYYY'}}" [style]="{width: '100%', margin: '0 auto'}"
           styleClass="p-card-shadow">
+
     <h3>Manches</h3>
     <p-knob [(ngModel)]="currentGame.currentFrame" [max]="currentGame.framesNumber" name="Nombre de manches jouées"
             valueTemplate="{value}/{{currentGame.framesNumber}}">
@@ -15,6 +16,8 @@
                 icon="pi pi-angle-right" iconPos="right" styleClass="p-button-success"></p-button>
 
     </ng-container>
+    <app-totaux-partie *ngIf="showGame" [players]="currentGame.players" [frames]="currentGame.frames"></app-totaux-partie>
+    <app-frame *ngIf="showGame" [players]="currentGame.players" [frames]="currentGame.frames"></app-frame>
 
     <router-outlet></router-outlet>
   </p-card>
