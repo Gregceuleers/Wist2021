@@ -21,12 +21,29 @@ export class PartieEnCoursComponent implements OnInit {
   ngOnInit(): void {
     this.gameService.getCurrentGame().subscribe(result => {
       this.currentGame = result;
-      console.log(this.currentGame);
 
     })
   }
 
   launchFrame(): void {
+
+    if (this.currentGame) {
+      this.currentGame.currentFrame++;
+      this.gameService.updateCurrentGame(this.currentGame).subscribe(result => {
+        this.currentGame = result;
+        this.gameService.addFrameToGame({
+          dealer: this.dealer ? this.dealer.name : '',
+          gameId: this.currentGame.id ? this.currentGame.id : 0,
+          playerResults: []
+
+        }, this.currentGame.id ? this.currentGame.id : 0).subscribe(game => {
+          this.currentGame = game;
+          console.log(this.currentGame);
+        })
+      });
+
+    }
+
 
   }
 

@@ -8,12 +8,15 @@
     </p-knob>
     <ng-container *ngIf="currentGame.currentFrame === 0">
       <h3>Sélection du donneur</h3>
-      <p-selectButton [options]="currentGame.players" optionLabel="name" (onChange)="setDealer($event)"></p-selectButton>
+      <p-selectButton [options]="currentGame.players" optionLabel="name"
+                      (onChange)="setDealer($event)"></p-selectButton>
       <br/>
-      <p-button label="lancer la première manche" [disabled]="!dealer" (onClick)="launchFrame()" icon="pi pi-angle-right" iconPos="right" styleClass="p-button-success"></p-button>
+      <p-button label="lancer la première manche" [disabled]="!dealer" (onClick)="launchFrame()"
+                icon="pi pi-angle-right" iconPos="right" styleClass="p-button-success"></p-button>
 
     </ng-container>
 
+    <router-outlet></router-outlet>
   </p-card>
 </ng-container>
 <ng-container *ngIf="!currentGame">

@@ -57,5 +57,13 @@ export class GameService {
     return this.httpClient.get<Game>(BaseURL + "games/current");
   }
 
+  updateCurrentGame(game: Game): Observable<Game> {
+    return this.httpClient.put<Game>(BaseURL + "games", game)
+  }
+
+  addFrameToGame(frame: Frame, gameId: number): Observable<Game> {
+    return this.httpClient.put<Game>(BaseURL + "games/" + gameId + "/frames", frame);
+  }
+
 
 }
