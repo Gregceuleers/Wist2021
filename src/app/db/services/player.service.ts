@@ -1,17 +1,21 @@
-import { Injectable } from '@angular/core';
-import {IdbService} from "../core/idb.service";
+import {Injectable} from '@angular/core';
 import {Player} from "../models/player";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {BaseURL} from "./config";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService {
 
+
+
   constructor(
-    private iDBService: IdbService
+    private httpClient: HttpClient
   ) { }
 
-  getAllPlayers(): Promise<Player[]> | undefined {
-    return this.iDBService.iDB()?.getAllFromIndex('players', 'by-name');
+  getAllPlayers(): Observable<Player[]> {
+    return this.httpClient.get<Player[]>( BaseURL + 'players');
   }
 }

@@ -27,7 +27,9 @@ export class ConfirmationPartieComponent implements OnInit {
   }
 
   complete(): void {
-    // Add game in DB and redirect to home
-    this.gameService.addGame();
+    // Add game in DB and redirect to partie en cours
+    this.gameService.addGame().subscribe(result => {
+      if (result) this.router.navigate(['/partieEnCours']).then();
+    });
   }
 }

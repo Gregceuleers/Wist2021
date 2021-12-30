@@ -6,6 +6,7 @@ import {PartieComponent} from "../partie/partie.component";
 import {SelectionJoueursComponent} from "../partie/selection-joueurs/selection-joueurs.component";
 import {NombrePartiesComponent} from "../partie/nombre-parties/nombre-parties.component";
 import {ConfirmationPartieComponent} from "../partie/confirmation-partie/confirmation-partie.component";
+import {PartieEnCoursComponent} from "../partie/partie-en-cours/partie-en-cours.component";
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
         component: ConfirmationPartieComponent
       }
     ]
+  },
+  {
+    path: 'partieEnCours',
+    component: PartieEnCoursComponent
   }
 ]
 

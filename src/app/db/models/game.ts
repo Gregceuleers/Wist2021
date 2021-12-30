@@ -4,7 +4,7 @@ import {Frame} from "./frame";
 export interface Game {
   id?: number;
   players: Player[];
-  gameNumbers?: number;
+  framesNumber?: number;
   state?: GameState;
   frames: Frame[];
 }

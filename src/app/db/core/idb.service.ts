@@ -1,10 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subject} from "rxjs";
-import {Player} from "../models/player";
+import {playersDB} from "../models/player";
 import {IDBPDatabase, openDB} from "idb";
 import {WistDBSchema} from "./wist-dbschema";
-import {playersDB} from "../models/player";
-import {Game} from "../models/game";
 
 
 @Injectable({

@@ -37,7 +37,7 @@ export class NombrePartiesComponent implements OnInit {
 
   nextPage(): void {
     const newGame = this.gameService.getNewGame();
-    newGame.gameNumbers = this.form.get('nombreParties')?.value.value;
+    newGame.framesNumber = this.form.get('nombreParties')?.value.value;
     console.log(newGame);
     this.gameService.setNewGame(newGame);
     this.router.navigate(['/partie/confirmation']).then();

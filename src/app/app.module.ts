@@ -14,6 +14,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
 import { NombrePartiesComponent } from './partie/nombre-parties/nombre-parties.component';
 import { ConfirmationPartieComponent } from './partie/confirmation-partie/confirmation-partie.component';
+import { PartieEnCoursComponent } from './partie/partie-en-cours/partie-en-cours.component';
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { ConfirmationPartieComponent } from './partie/confirmation-partie/confir
     SelectionJoueursComponent,
     NombrePartiesComponent,
     ConfirmationPartieComponent,
+    PartieEnCoursComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,6 +35,7 @@ import { ConfirmationPartieComponent } from './partie/confirmation-partie/confir
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     InputTextModule,
   ],
   providers: [],

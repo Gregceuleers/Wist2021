@@ -30,7 +30,7 @@ export class SelectionJoueursComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.playerService.getAllPlayers()?.then(p => this.players = p);
+    this.playerService.getAllPlayers().subscribe(p => this.players = p);
   }
 
   nextPage(): void {
