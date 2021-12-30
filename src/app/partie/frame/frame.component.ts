@@ -14,6 +14,8 @@ export class FrameComponent implements OnInit {
 
   @Input() frames: Frame[] = [];
   @Input() players: Player[] = [];
+  @Input() dealer: Player | undefined;
+
   index: number = 1;
   form: FormGroup | undefined;
   typesGame = typesManche;

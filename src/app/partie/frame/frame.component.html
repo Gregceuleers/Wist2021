@@ -1,6 +1,6 @@
 <p-card subheader="Manche 1">
   <ng-container *ngIf="players">
-    <h3>Donneur : {{players[index - 1].name}}</h3>
+    <h3 *ngIf="dealer">Donneur : {{dealer.name}}</h3>
     <ng-container *ngIf="form">
       <div class="p-fluid" [formGroup]="form">
         <h4>Type de jeu</h4>

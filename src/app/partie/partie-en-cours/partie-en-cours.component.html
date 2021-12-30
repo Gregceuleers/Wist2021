@@ -17,7 +17,7 @@
 
     </ng-container>
     <app-totaux-partie *ngIf="showGame" [players]="currentGame.players" [frames]="currentGame.frames"></app-totaux-partie>
-    <app-frame *ngIf="showGame" [players]="currentGame.players" [frames]="currentGame.frames"></app-frame>
+    <app-frame *ngIf="showGame" [players]="currentGame.players" [frames]="currentGame.frames" [dealer]="dealer"></app-frame>
 
     <router-outlet></router-outlet>
   </p-card>
