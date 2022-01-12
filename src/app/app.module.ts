@@ -19,6 +19,7 @@ import {HttpClientModule} from "@angular/common/http";
 import localeFr from '@angular/common/locales/fr';
 import { TotauxPartieComponent } from './partie/partie-en-cours/totaux-partie/totaux-partie.component';
 import { FrameComponent } from './partie/frame/frame.component';
+import { InfoPointsPartieComponent } from './partie/partie-en-cours/info-points-partie/info-points-partie.component';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -33,6 +34,7 @@ registerLocaleData(localeFr, 'fr');
     PartieEnCoursComponent,
     TotauxPartieComponent,
     FrameComponent,
+    InfoPointsPartieComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,10 @@
+.win {
+  font-size: xx-large;
+  padding: 0.7em;
+  color: green;
+}
+.loose {
+  font-size: xx-large;
+  padding: 0.7em;
+  color: red;
+}

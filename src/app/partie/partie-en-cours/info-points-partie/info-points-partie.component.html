@@ -1,0 +1,65 @@
+<div class="flex justify-content-between justify-content-between text-center" *ngIf="data">
+  <div class="p-sm-6 p-md-6 p-col-3 text-justify">
+    <h5>Joueur actif</h5>
+    <div class="flex-grow-1 align-items-center justify-content-around">
+      <div class="p-mr-2">
+        victoire <span class="win" *ngIf="data.winPoints">+{{data.winPoints}}</span>
+        <ng-container *ngIf="data.winPointsByLevee">
+          <br><span class="win" style="font-size: 1em;">+{{data.winPointsByLevee}} par levée</span>
+        </ng-container>
+        <ng-container *ngIf="data.winAllLevees">
+          <br><span class="win" style="font-size: 1em;">+{{data.winAllLevees}} si 13 levées</span>
+        </ng-container>
+        <ng-container *ngIf="data.deuxWinPoints">
+          <br><span class="win" style="font-size: 1em;">+{{data.deuxWinPoints}} si 2 gagnants</span>
+        </ng-container>
+        <ng-container *ngIf="data.unWinPoints">
+          <br><span class="win" style="font-size: 1em;">+{{data.unWinPoints}} si 1 gagnant</span>
+        </ng-container>
+
+      </div>
+      <div class="p-mr-2">
+        défaite <span class="loose">{{data.loosePoints}}</span>
+        <ng-container *ngIf="data.loosePointsByLevee">
+          <br><span class="loose" style="font-size: 1em">{{data.loosePointsByLevee}} par levée</span>
+        </ng-container>
+        <ng-container *ngIf="data.unWinPoints">
+          <br><span class="loose" style="font-size: 1em;">{{data.unLoosePoints}} si 1 perdant</span>
+        </ng-container>
+        <ng-container *ngIf="data.deuxLoosePoints">
+          <br><span class="loose" style="font-size: 1em;">{{data.deuxLoosePoints}} si 2 perdants</span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="p-sm-6 p-md-6 p-col-3 text-justify">
+    <h5>Joueur passif</h5>
+    <div class="flex-grow-1 align-items-center justify-content-between">
+      <div class="p-mr-2">
+        défaite <span class="loose">{{data.loosePointsPassif}}</span>
+        <ng-container *ngIf="data.loosePointsPassifByLevee">
+          <br><span class="loose" style="font-size: 1em;">{{data.loosePointsPassifByLevee}} par levée</span>
+        </ng-container>
+        <ng-container *ngIf="data.looseAllLevees">
+          <br><span class="loose" style="font-size: 1em;">{{data.looseAllLevees}} si 13 levées</span>
+        </ng-container>
+        <ng-container *ngIf="data.deuxWinPassif">
+          <br><span class="loose" style="font-size: 1em">{{data.deuxWinPassif}} si 2 gagnants</span>
+        </ng-container>
+
+      </div>
+      <div class="p-mr-2">
+        victoire <span class="win" *ngIf="data.winPointsPassif">+{{data.winPointsPassif}}</span>
+        <ng-container *ngIf="data.winPointsPassifByLevee">
+          <br><span class="win" style="font-size: 1em;">+{{data.winPointsPassifByLevee}} par levée</span>
+        </ng-container>
+        <ng-container *ngIf="data.unWinPassif">
+          <br><span class="win" style="font-size: 1em;">+{{data.unWinPassif}} si 1 gagnant / 1 perdant</span>
+        </ng-container>
+        <ng-container *ngIf="data.deuxLoosePassif">
+          <br><span class="win" style="font-size: 1em;">+{{data.deuxLoosePassif}} si 2 perdants</span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

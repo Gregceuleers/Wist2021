@@ -28,7 +28,7 @@ export class FrameComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.builder.group({
-      typeGame: ['', Validators.required],
+      typeGame: [null, Validators.required],
       players: ['', Validators.required]
     })
     this.gameService.getCurrentGame().subscribe(current => {
@@ -40,5 +40,23 @@ export class FrameComponent implements OnInit {
 
   checkValidity(): void {
 
+  }
+
+  getInfoPoints(): any {
+    if (this.form?.get('typeGame') && this.form?.get('typeGame')?.value !== undefined) {
+      return this.form?.get('typeGame')?.value;
+    }
+    return null;
+  }
+
+  isAlone(): boolean {
+    if (this.form?.get('typeGame') && this.form?.get('typeGame')?.value !== undefined) {
+      return !this.form?.get('typeGame')?.value?.jeuADeux;
+    }
+    return true;
+  }
+
+  success(): void {
+    console.log(this.form?.value);
   }
 }

@@ -1,17 +1,22 @@
-<p-card subheader="Manche 1">
+<p-card subheader="Manche {{index}}">
   <ng-container *ngIf="players">
     <h3 *ngIf="dealer">Donneur : {{dealer.name}}</h3>
     <ng-container *ngIf="form">
       <div class="p-fluid" [formGroup]="form">
         <h4>Type de jeu</h4>
         <p-treeSelect [options]="typesGame" formControlName="typeGame" selectionMode="single"></p-treeSelect>
+        <app-info-points-partie [data]="getInfoPoints()"></app-info-points-partie>
+
         <h4>Joueur(s)</h4>
-        <div class="p-field">
-          <p-multiSelect inputId="player" [options]="players" (onChange)="checkValidity()" optionLabel="name"
+        <div class="p-field" *ngIf="isAlone()">
+          <p-dropdown [options]="players" optionLabel="name" formControlName="players"></p-dropdown>
+        </div>
+        <div class="p-field" *ngIf="!isAlone()">
+          <p-multiSelect inputId="player" [options]="players"  (onChange)="checkValidity()" optionLabel="name"
                          placeholder="" formControlName="players"></p-multiSelect>
         </div>
         <div class="buttons">
-          <p-button label="Réussite" icon="pi pi-check-circle" iconPos="right" styleClass="p-button-success"></p-button>
+          <p-button label="Réussite" icon="pi pi-check-circle" iconPos="right" styleClass="p-button-success" (click)="success()" [disabled]="!form.valid"></p-button>
           <p-button label="Echec" icon="pi pi-times-circle" iconPos="right" styleClass="p-button-danger"></p-button>
 
         </div>
