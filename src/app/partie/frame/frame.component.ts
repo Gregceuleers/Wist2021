@@ -28,8 +28,9 @@ export class FrameComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.builder.group({
+      dealer: [null, Validators.required],
       typeGame: [null, Validators.required],
-      players: ['', Validators.required]
+      players: [null, Validators.required]
     })
     this.gameService.getCurrentGame().subscribe(current => {
       if (current != null) {
@@ -58,5 +59,7 @@ export class FrameComponent implements OnInit {
 
   success(): void {
     console.log(this.form?.value);
+    this.form?.reset();
+    this.form?.updateValueAndValidity();
   }
 }
