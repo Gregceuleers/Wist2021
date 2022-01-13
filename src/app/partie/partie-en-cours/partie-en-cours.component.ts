@@ -3,6 +3,7 @@ import {GameService} from "../../db/services/game.service";
 import {Game} from "../../db/models/game";
 import {Player} from "../../db/models/player";
 import {PlayerFrameResult} from "../../db/models/player-frame-result";
+import {ConfirmationService} from "primeng/api";
 
 @Component({
   selector: 'app-partie-en-cours',
@@ -62,8 +63,12 @@ export class PartieEnCoursComponent implements OnInit {
       });
 
     }
+  }
 
-
+  nextFrame(): void {
+    if (this.currentGame?.currentFrame) {
+      this.currentGame.currentFrame++;
+    }
   }
 
   setDealer($event: any): void {

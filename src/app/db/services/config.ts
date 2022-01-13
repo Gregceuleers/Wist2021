@@ -94,7 +94,8 @@ export const typesManche = [
         loosePointsByLevee: -6,
         winPointsPassif: 2,
         winPointsPassifByLevee: 2,
-        selectionInactive: false
+        selectionInactive: false,
+        jeuADeux: false
       },
       {
         label: "Seul 7",
@@ -106,7 +107,8 @@ export const typesManche = [
         loosePointsByLevee: -6,
         winPointsPassif: 2,
         winPointsPassifByLevee: 2,
-        selectionInactive: false
+        selectionInactive: false,
+        jeuADeux: false
       },
       {
         label: "Seul 8",
@@ -118,7 +120,8 @@ export const typesManche = [
         loosePointsByLevee: -6,
         winPointsPassif: 2,
         winPointsPassifByLevee: 2,
-        selectionInactive: false
+        selectionInactive: false,
+        jeuADeux: false
       }
     ]
   },
@@ -134,6 +137,7 @@ export const typesManche = [
         loosePointsPassif: -4,
         loosePoints: -18,
         winPointsPassif: 6,
+        jeuADeux: false
       },
       {
         label: 'Petite misère à 2',
@@ -165,6 +169,7 @@ export const typesManche = [
     loosePointsPassif: -5,
     loosePoints: -21,
     winPointsPassif: 7,
+    jeuADeux: false
   },
   {
     label: "Piccolissimo",
@@ -178,6 +183,7 @@ export const typesManche = [
         loosePointsPassif: -6,
         loosePoints: -27,
         winPointsPassif: 9,
+        jeuADeux: false
       },
       {
         label: 'Piccolissimo à 2',
@@ -205,6 +211,7 @@ export const typesManche = [
         loosePointsPassif: -6,
         loosePoints: -27,
         winPointsPassif: 9,
+        jeuADeux: false
       },
       {
         label: "Abondance sur table",
@@ -213,6 +220,7 @@ export const typesManche = [
         loosePointsPassif: -7,
         loosePoints: -33,
         winPointsPassif: 11,
+        jeuADeux: false
       }
     ]
   },
@@ -228,6 +236,7 @@ export const typesManche = [
         loosePointsPassif: -8,
         loosePoints: -36,
         winPointsPassif: 12,
+        jeuADeux: false
       },
       {
         label: 'Grande misère à 2',
@@ -248,6 +257,7 @@ export const typesManche = [
         loosePointsPassif: -10,
         loosePoints: -45,
         winPointsPassif: 15,
+        jeuADeux: false
       }
     ]
   },
@@ -263,6 +273,7 @@ export const typesManche = [
         loosePointsPassif: -12,
         loosePoints: -48,
         winPointsPassif: 16,
+        jeuADeux: false
       },
       {
         label: 'Piccolo à 2',
@@ -285,6 +296,7 @@ export const typesManche = [
     loosePointsPassif: -16,
     loosePoints: -48,
     winPointsPassif: 16,
+    jeuADeux: false
   },
   {
     label: "Petit solo chelem",
@@ -293,6 +305,7 @@ export const typesManche = [
     loosePointsPassif: -20,
     loosePoints: -60,
     winPointsPassif: 20,
+    jeuADeux: false
   },
   {
     label: "Solo chelem",
@@ -301,5 +314,6 @@ export const typesManche = [
     loosePointsPassif: -30,
     loosePoints: -90,
     winPointsPassif: 30,
+    jeuADeux: false
   }
 ];

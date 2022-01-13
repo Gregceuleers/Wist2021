@@ -2,7 +2,7 @@
   <ng-container *ngIf="players">
     <h3 *ngIf="dealer">Donneur : {{dealer.name}}</h3>
     <ng-container *ngIf="form">
-      <form class="p-fluid" [formGroup]="form" (submit)="success()">
+      <form class="p-fluid" [formGroup]="form" (submit)="success($event)">
         <h4>Sélection du donneur</h4>
         <div class="p-field">
           <p-selectButton [options]="players" optionLabel="name" formControlName="dealer"
@@ -21,11 +21,14 @@
                          placeholder="Sélection des 2 joueurs" formControlName="players"></p-multiSelect>
         </div>
         <div class="buttons">
-          <button pButton label="Réussite" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-success" [disabled]="form.invalid"></button>
-          <button pButton label="Echec" icon="pi pi-times-circle" iconPos="right" class="p-button-outlined p-button-danger" [disabled]="form.invalid"></button>
+          <button pButton label="Réussite" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-success" [disabled]="form.invalid" ></button>
+          <button pButton label="Echec" icon="pi pi-times-circle" iconPos="right" class="p-button-outlined p-button-danger" [disabled]="form.invalid" ></button>
 
         </div>
       </form>
     </ng-container>
   </ng-container>
+  <p-confirmDialog #cd  [style]="{width: '90vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined">
+  </p-confirmDialog>
+
 </p-card>

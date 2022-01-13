@@ -14,6 +14,7 @@ import {KnobModule} from "primeng/knob";
 import {SelectButtonModule} from "primeng/selectbutton";
 import {TableModule} from "primeng/table";
 import {TreeSelectModule} from "primeng/treeselect";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 @NgModule({
   declarations: [],
@@ -32,7 +33,8 @@ import {TreeSelectModule} from "primeng/treeselect";
     KnobModule,
     SelectButtonModule,
     TableModule,
-    TreeSelectModule
+    TreeSelectModule,
+    ConfirmDialogModule
   ], exports: [
     MenubarModule,
     CardModule,
@@ -47,7 +49,8 @@ import {TreeSelectModule} from "primeng/treeselect";
     KnobModule,
     SelectButtonModule,
     TableModule,
-    TreeSelectModule
+    TreeSelectModule,
+    ConfirmDialogModule
   ]
 })
 export class PrimeConfigModule { }
