@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {GameService} from "../../db/services/game.service";
 import {Game} from "../../db/models/game";
 import {Player} from "../../db/models/player";
+import {PlayerFrameResult} from "../../db/models/player-frame-result";
 
 @Component({
   selector: 'app-partie-en-cours',
@@ -13,10 +14,22 @@ export class PartieEnCoursComponent implements OnInit {
   currentGame: Game | undefined;
   dealer: Player | undefined;
   showGame = false;
+  players: PlayerFrameResult[] = [];
 
   constructor(
     private gameService: GameService
   ) {
+  }
+
+  private generatePlayersDataInit(players: Player[]): PlayerFrameResult[] {
+    players.forEach(p => {
+      this.players.push({
+        player: p,
+        result: 0
+      })
+    });
+
+    return this.players;
   }
 
   ngOnInit(): void {
@@ -24,6 +37,7 @@ export class PartieEnCoursComponent implements OnInit {
       this.currentGame = result;
       if (this.currentGame !== null && this.currentGame.currentFrame > 0) {
         this.showGame = true;
+        this.players = this.generatePlayersDataInit(this.currentGame.players);
       }
 
     })

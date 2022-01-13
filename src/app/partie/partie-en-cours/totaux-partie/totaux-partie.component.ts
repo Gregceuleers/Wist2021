@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Frame} from "../../../db/models/frame";
-import {Player} from "../../../db/models/player";
+import {PlayerFrameResult} from "../../../db/models/player-frame-result";
 
 @Component({
   selector: 'app-totaux-partie',
@@ -12,7 +12,7 @@ export class TotauxPartieComponent implements OnInit {
   constructor() { }
 
   @Input() frames: Frame[] = [];
-  @Input() players: Player[] | undefined;
+  @Input() players: PlayerFrameResult[] | undefined;
 
   ngOnInit(): void {
   }
