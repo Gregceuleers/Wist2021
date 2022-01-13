@@ -156,7 +156,7 @@ export const typesManche = [
     winPoints: 9,
     loosePointsPassif: -9,
     loosePoints: -18,
-    winPointsPassif: +18,
+    winPointsPassif: 18,
   },
   {
     label: '8 seul sur misère',
