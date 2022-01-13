@@ -10,19 +10,10 @@
         </p-knob>
       </div>
       <div>
-        <app-totaux-partie *ngIf="showGame" [players]="players" [frames]="currentGame.frames"></app-totaux-partie>
+        <app-totaux-partie *ngIf="showGame" [players]="players" [frames]="currentGame.frames" ></app-totaux-partie>
       </div>
     </div>
 
-    <ng-container *ngIf="currentGame.currentFrame === 0">
-<!--      <h3>Sélection du donneur</h3>-->
-<!--      <p-selectButton [options]="currentGame.players" optionLabel="name"-->
-<!--                      (onChange)="setDealer($event)"></p-selectButton>-->
-<!--      <br/>-->
-      <p-button label="lancer la première manche" (onClick)="launchFrame()"
-                icon="pi pi-angle-right" iconPos="right" styleClass="p-button-success"></p-button>
-
-    </ng-container>
     <app-frame *ngIf="showGame" [players]="currentGame.players" [frames]="currentGame.frames"></app-frame>
 
     <router-outlet></router-outlet>

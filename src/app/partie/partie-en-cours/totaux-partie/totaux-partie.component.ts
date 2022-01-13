@@ -12,7 +12,7 @@ export class TotauxPartieComponent implements OnInit {
   constructor() { }
 
   @Input() frames: Frame[] = [];
-  @Input() players: PlayerFrameResult[] | undefined;
+  @Input() players: PlayerFrameResult[] = [];
 
   ngOnInit(): void {
   }

@@ -1,4 +1,4 @@
-<p-table [value]="frames" responsiveLayout="scroll" [resizableColumns]="true" >
+<p-table [value]="players" responsiveLayout="scroll" [resizableColumns]="true" >
   <ng-template pTemplate="header">
       <tr>
         <th>
@@ -7,8 +7,8 @@
         <th>Points</th>
       </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-frame>
-    <tr *ngFor="let p of players">
+  <ng-template pTemplate="body" let-p>
+    <tr>
       <td>{{p.player.name}}</td>
       <td>{{p.result}}</td>
     </tr>

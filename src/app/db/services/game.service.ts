@@ -37,6 +37,7 @@ export class GameService {
 
   addGame(): Observable<Boolean> {
     this._newGame.state = GameState.EN_COURS;
+    this._newGame.currentFrame = 1
     const inserted = this._newGame;
 
     this.newGame$.next(this._newGame);

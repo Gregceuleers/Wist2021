@@ -3,7 +3,6 @@ import {GameService} from "../../db/services/game.service";
 import {Game} from "../../db/models/game";
 import {Player} from "../../db/models/player";
 import {PlayerFrameResult} from "../../db/models/player-frame-result";
-import {ConfirmationService} from "primeng/api";
 
 @Component({
   selector: 'app-partie-en-cours',
@@ -22,7 +21,7 @@ export class PartieEnCoursComponent implements OnInit {
   ) {
   }
 
-  private generatePlayersDataInit(players: Player[]): PlayerFrameResult[] {
+  private generatePlayersDataInit(players: Player[]) {
     players.forEach(p => {
       this.players.push({
         player: p,
@@ -30,15 +29,15 @@ export class PartieEnCoursComponent implements OnInit {
       })
     });
 
-    return this.players;
   }
 
   ngOnInit(): void {
     this.gameService.getCurrentGame().subscribe(result => {
+      console.log(result);
       this.currentGame = result;
-      if (this.currentGame !== null && this.currentGame.currentFrame > 0) {
+      if (this.currentGame !== null) {
         this.showGame = true;
-        this.players = this.generatePlayersDataInit(this.currentGame.players);
+        this.generatePlayersDataInit(this.currentGame.players);
       }
 
     })
@@ -50,16 +49,16 @@ export class PartieEnCoursComponent implements OnInit {
       this.currentGame.currentFrame++;
       this.gameService.updateCurrentGame(this.currentGame).subscribe(result => {
         this.currentGame = result;
-        this.gameService.addFrameToGame({
-          dealer: this.dealer ? this.dealer.name : '',
-          gameId: this.currentGame.id ? this.currentGame.id : 0,
-          playerResults: []
-
-        }, this.currentGame.id ? this.currentGame.id : 0).subscribe(game => {
-          this.currentGame = game;
-          this.showGame = true;
-          console.log(this.currentGame);
-        })
+        this.showGame = true;
+        // this.gameService.addFrameToGame({
+        //   dealer: this.dealer ? this.dealer.name : '',
+        //   gameId: this.currentGame.id ? this.currentGame.id : 0,
+        //   playerResults: []
+        // }, this.currentGame.id ? this.currentGame.id : 0).subscribe(game => {
+        //   this.currentGame = game;
+        //   this.showGame = true;
+        //   console.log(this.currentGame);
+        // })
       });
 
     }
