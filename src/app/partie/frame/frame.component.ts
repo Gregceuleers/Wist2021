@@ -18,9 +18,10 @@ export class FrameComponent implements OnInit {
   @Input() players: Player[] = [];
   @Input() dealer: Player | undefined;
 
-  @Output() sendOutputData: EventEmitter<any> = new EventEmitter<any>();
+  @Output() sendOutputData: EventEmitter<Frame> = new EventEmitter<Frame>();
 
   index: number = 1;
+  gameId: number | undefined = 0;
   form: FormGroup | undefined;
   typesGame = typesManche;
 
@@ -40,6 +41,7 @@ export class FrameComponent implements OnInit {
     this.gameService.getCurrentGame().subscribe(current => {
       if (current != null) {
         this.index = current.currentFrame;
+        this.gameId = current.id;
       }
     })
   }
@@ -88,7 +90,7 @@ export class FrameComponent implements OnInit {
     return message;
   }
 
-  success(event: Event): void {
+  submit(event: Event): void {
     console.log();
     // if (this.form?.valid) {
     switch ((event as SubmitEvent)?.submitter?.innerText) {
@@ -102,7 +104,17 @@ export class FrameComponent implements OnInit {
           acceptLabel: 'Confirmer',
           rejectLabel: 'Refuser',
           accept: () => {
+            this.sendOutputData.emit({
+              dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
+              inactivePlayer: 'TEST',
+              gameId: this.gameId,
+              wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
+              isSuccess: true,
+              framePlayerResultList: [],
+              framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
+            });
             this.resetForm();
+            this.index++;
           },
           reject: () => {
           }
@@ -118,6 +130,17 @@ export class FrameComponent implements OnInit {
           acceptLabel: 'Confirmer',
           rejectLabel: 'Refuser',
           accept: () => {
+            this.sendOutputData.emit({
+              dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
+              inactivePlayer: 'TEST',
+              gameId: this.gameId,
+              wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
+              isSuccess: false,
+              framePlayerResultList: [],
+              framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
+            });
+            this.resetForm();
+            this.index++;
           },
           reject: () => {
           }

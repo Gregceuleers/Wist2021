@@ -3,6 +3,7 @@ import {GameService} from "../../db/services/game.service";
 import {Game} from "../../db/models/game";
 import {Player} from "../../db/models/player";
 import {PlayerFrameResult} from "../../db/models/player-frame-result";
+import {Frame} from "../../db/models/frame";
 
 @Component({
   selector: 'app-partie-en-cours',
@@ -25,7 +26,7 @@ export class PartieEnCoursComponent implements OnInit {
     players.forEach(p => {
       this.players.push({
         player: p,
-        result: 0
+        score: 0
       })
     });
 
@@ -64,13 +65,20 @@ export class PartieEnCoursComponent implements OnInit {
     }
   }
 
-  nextFrame(): void {
-    if (this.currentGame?.currentFrame) {
+  nextFrame(frame: Frame): void {
+    if (this.currentGame?.id) {
       this.currentGame.currentFrame++;
+      this.gameService.addFrameToGame(frame,this.currentGame.id).subscribe(game => {
+        this.currentGame = game;
+        this.showGame = true;
+        this.players = this.currentGame.frames[this.currentGame.currentFrame - 2].framePlayerResultList;
+        console.log(this.currentGame);
+      })
     }
   }
 
-  setDealer($event: any): void {
-    this.dealer = $event.value;
+  collectOutputData(data: Frame): void {
+    data.framePlayerResultList = this.players;
+    this.nextFrame(data);
   }
 }
