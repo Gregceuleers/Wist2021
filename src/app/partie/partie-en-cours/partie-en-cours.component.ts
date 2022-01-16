@@ -34,45 +34,30 @@ export class PartieEnCoursComponent implements OnInit {
 
   ngOnInit(): void {
     this.gameService.getCurrentGame().subscribe(result => {
-      console.log(result);
+      // console.log(result);
       this.currentGame = result;
       if (this.currentGame !== null) {
         this.showGame = true;
-        this.generatePlayersDataInit(this.currentGame.players);
+        if (this.currentGame.currentFrame <= 1) {
+          this.generatePlayersDataInit(this.currentGame.players);
+        } else {
+          console.log(this.currentGame);
+          this.players = this.currentGame.frames[this.currentGame.currentFrame - 2].framePlayerResultList;
+        }
       }
 
     })
   }
 
-  launchFrame(): void {
-
-    if (this.currentGame) {
-      this.currentGame.currentFrame++;
-      this.gameService.updateCurrentGame(this.currentGame).subscribe(result => {
-        this.currentGame = result;
-        this.showGame = true;
-        // this.gameService.addFrameToGame({
-        //   dealer: this.dealer ? this.dealer.name : '',
-        //   gameId: this.currentGame.id ? this.currentGame.id : 0,
-        //   playerResults: []
-        // }, this.currentGame.id ? this.currentGame.id : 0).subscribe(game => {
-        //   this.currentGame = game;
-        //   this.showGame = true;
-        //   console.log(this.currentGame);
-        // })
-      });
-
-    }
-  }
-
   nextFrame(frame: Frame): void {
     if (this.currentGame?.id) {
       this.currentGame.currentFrame++;
+     // console.log(frame);
       this.gameService.addFrameToGame(frame,this.currentGame.id).subscribe(game => {
         this.currentGame = game;
         this.showGame = true;
         this.players = this.currentGame.frames[this.currentGame.currentFrame - 2].framePlayerResultList;
-        console.log(this.currentGame);
+         console.log(this.currentGame);
       })
     }
   }

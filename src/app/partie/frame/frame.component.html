@@ -5,7 +5,7 @@
       <form class="p-fluid" [formGroup]="form" (submit)="submit($event)">
         <h4>Sélection du donneur</h4>
         <div class="p-field">
-          <p-selectButton [options]="players" optionLabel="name" formControlName="dealer"
+          <p-selectButton [options]="players" optionLabel="name" formControlName="dealer" (onChange)="setFramePlayers($event)"
           ></p-selectButton>
         </div>
         <h4>Type de jeu</h4>
@@ -14,10 +14,10 @@
 
         <h4>Joueur(s)</h4>
         <div class="p-field" *ngIf="isAlone()">
-          <p-dropdown [options]="players" optionLabel="name" formControlName="players" placeholder="Sélection du joueur" ></p-dropdown>
+          <p-dropdown [options]="framePlayers" optionLabel="name" formControlName="players" placeholder="Sélection du joueur" ></p-dropdown>
         </div>
         <div class="p-field" *ngIf="!isAlone()">
-          <p-multiSelect inputId="player" [options]="players"  (onChange)="checkValidity()" optionLabel="name"
+          <p-multiSelect inputId="player" [options]="framePlayers"  (onChange)="checkValidity()" optionLabel="name"
                          placeholder="Sélection des 2 joueurs" formControlName="players"></p-multiSelect>
         </div>
         <div class="buttons">

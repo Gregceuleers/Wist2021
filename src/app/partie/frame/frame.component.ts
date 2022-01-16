@@ -24,7 +24,7 @@ export class FrameComponent implements OnInit {
   gameId: number | undefined = 0;
   form: FormGroup | undefined;
   typesGame = typesManche;
-
+  framePlayers: Player[] = [];
   constructor(
     private gameService: GameService,
     private confirmationService: ConfirmationService,
@@ -33,6 +33,9 @@ export class FrameComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.framePlayers = this.players;
+
     this.form = this.builder.group({
       dealer: [null, Validators.required],
       typeGame: [null, Validators.required],
@@ -150,4 +153,17 @@ export class FrameComponent implements OnInit {
   }
 
   // }
+  setFramePlayers($event: any): void {
+    console.log($event);
+    if (this.players.length === 5) {
+      this.framePlayers = [];
+      this.players.forEach(p => {
+        if (p.id !== $event.value.id) {
+          this.framePlayers.push(p);
+        }
+      })
+    } else {
+      this.framePlayers = this.players;
+    }
+  }
 }
