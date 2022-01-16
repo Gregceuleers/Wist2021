@@ -63,6 +63,7 @@ export class PartieEnCoursComponent implements OnInit {
   }
 
   collectOutputData(data: Frame): void {
+
     data.framePlayerResultList = this.players;
     this.nextFrame(data);
   }

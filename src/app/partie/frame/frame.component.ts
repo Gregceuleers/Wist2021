@@ -23,8 +23,14 @@ export class FrameComponent implements OnInit {
   index: number = 1;
   gameId: number | undefined = 0;
   form: FormGroup | undefined;
+  result: string | undefined;
   typesGame = typesManche;
   framePlayers: Player[] = [];
+  extraFramePlayers: Player[] = [];
+  showExtraInfoDialog = false;
+  showExtraPlayersDialog = false;
+  messageDialog = '';
+
   constructor(
     private gameService: GameService,
     private confirmationService: ConfirmationService,
@@ -40,7 +46,8 @@ export class FrameComponent implements OnInit {
       dealer: [null, Validators.required],
       typeGame: [null, Validators.required],
       players: [null, Validators.required]
-    })
+    });
+
     this.gameService.getCurrentGame().subscribe(current => {
       if (current != null) {
         this.index = current.currentFrame;
@@ -93,11 +100,39 @@ export class FrameComponent implements OnInit {
     return message;
   }
 
+  private generateInactivePlayer(inactivePlayer: Player): string | undefined {
+    return (this.players.length === 5) ? inactivePlayer.name : undefined;
+  }
+
+  private checkIfOpenExtraPointDialog(isSuccess: boolean, wistGameInfoLabel: string): boolean {
+    if (isSuccess) {
+      switch (wistGameInfoLabel) {
+        case 'Petite misère à 2':
+        case 'Grande misère à 2':
+        case 'Piccolo à 2':
+        case 'Piccolissimo à 2':
+          return true;
+      }
+    } else {
+      switch (wistGameInfoLabel) {
+        case 'Petite misère à 2':
+        case 'Grande misère à 2':
+        case 'Piccolo à 2':
+        case 'Piccolissimo à 2':
+          return  true;
+      }
+    }
+
+    return false;
+  }
+
   submit(event: Event): void {
     console.log();
+
     // if (this.form?.valid) {
     switch ((event as SubmitEvent)?.submitter?.innerText) {
       case 'Réussite':
+        this.messageDialog = 'Réussite';
         this.confirmationService.confirm({
           message: this.generateConfirmationMessage(this.form?.value, true),
           header: 'Confirmation de réussite',
@@ -107,23 +142,30 @@ export class FrameComponent implements OnInit {
           acceptLabel: 'Confirmer',
           rejectLabel: 'Refuser',
           accept: () => {
-            this.sendOutputData.emit({
-              dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
-              inactivePlayer: 'TEST',
-              gameId: this.gameId,
-              wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
-              isSuccess: true,
-              framePlayerResultList: [],
-              framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
-            });
-            this.resetForm();
-            this.index++;
+            if (this.checkIfOpenExtraPointDialog(true, this.form?.get('typeGame')?.value.label)) {
+              this.showExtraInfoDialog = true;
+
+            } else {
+              this.sendOutputData.emit({
+                dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
+                inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
+                gameId: this.gameId,
+                wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
+                isSuccess: true,
+                framePlayerResultList: [],
+                framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
+              } as Frame);
+              this.resetForm();
+              this.index++;
+            }
+
           },
           reject: () => {
           }
         })
         break;
       case 'Echec':
+        this.messageDialog = 'Echec';
         this.confirmationService.confirm({
           message: this.generateConfirmationMessage(this.form?.value, false),
           header: 'Confirmation de défaite',
@@ -135,13 +177,13 @@ export class FrameComponent implements OnInit {
           accept: () => {
             this.sendOutputData.emit({
               dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
-              inactivePlayer: 'TEST',
+              inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
               gameId: this.gameId,
               wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
               isSuccess: false,
               framePlayerResultList: [],
               framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
-            });
+            } as Frame);
             this.resetForm();
             this.index++;
           },
@@ -153,6 +195,7 @@ export class FrameComponent implements OnInit {
   }
 
   // }
+
   setFramePlayers($event: any): void {
     console.log($event);
     if (this.players.length === 5) {
@@ -164,6 +207,44 @@ export class FrameComponent implements OnInit {
       })
     } else {
       this.framePlayers = this.players;
+    }
+  }
+
+  validateExtraInfo(): void {
+    if (this.messageDialog) {
+      this.sendOutputData.emit({
+        dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
+        inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
+        gameId: this.gameId,
+        wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
+        isSuccess: true,
+        framePlayerResultList: [],
+        framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
+      } as Frame);
+    } else {
+      this.sendOutputData.emit({
+        dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
+        inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
+        gameId: this.gameId,
+        wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
+        isSuccess: false,
+        framePlayerResultList: [],
+        framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
+      } as Frame);
+    }
+
+    this.resetForm();
+    this.index++;
+  }
+
+  checkRadioButton(value: any) {
+    switch (value) {
+      case '1Win1Loose':
+        this.showExtraPlayersDialog = true;
+        this.extraFramePlayers = (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
+        break;
+      default:
+        this.showExtraPlayersDialog = false;
     }
   }
 }

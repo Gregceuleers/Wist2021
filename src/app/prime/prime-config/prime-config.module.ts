@@ -15,6 +15,8 @@ import {SelectButtonModule} from "primeng/selectbutton";
 import {TableModule} from "primeng/table";
 import {TreeSelectModule} from "primeng/treeselect";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {DialogModule} from "primeng/dialog";
+import {RadioButtonModule} from "primeng/radiobutton";
 
 @NgModule({
   declarations: [],
@@ -34,7 +36,9 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
     SelectButtonModule,
     TableModule,
     TreeSelectModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    DialogModule,
+    RadioButtonModule
   ], exports: [
     MenubarModule,
     CardModule,
@@ -50,7 +54,9 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
     SelectButtonModule,
     TableModule,
     TreeSelectModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    DialogModule,
+    RadioButtonModule
   ]
 })
 export class PrimeConfigModule { }

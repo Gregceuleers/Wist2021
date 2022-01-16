@@ -30,5 +30,34 @@
   </ng-container>
   <p-confirmDialog #cd  [style]="{width: '90vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined">
   </p-confirmDialog>
+  <p-dialog [(visible)]="showExtraInfoDialog" [modal]="true" [style]="{width: '90vw'}" [baseZIndex]="10000">
+    <ng-template pTemplate="header">
+      <h3 style="font-weight: 600">Confirmation supplémentaire</h3>
+    </ng-template>
+      <div class="p-field-radiobutton">
+        <p-radioButton name="city" value="2Win" [(ngModel)]="result" id="1" (ngModelChange)="checkRadioButton($event)"></p-radioButton>
+        <label for="1"> 2 gagnants</label>
+      </div>
+      <div class="p-field-radiobutton">
+        <p-radioButton name="city" value="1Win1Loose" [(ngModel)]="result" id="2" (ngModelChange)="checkRadioButton($event)"></p-radioButton>
+        <label for="2"> 1 gagnant / 1 perdant</label>
+        <div *ngIf="showExtraPlayersDialog" style="margin-top: 1.7em">
+          <div class="p-field flex justify-content-around">
+            <label style="font-weight: 600; font-size: 1.1em; padding-right: 0.7em">Vainqueur </label>
+            <p-selectButton [options]="extraFramePlayers" optionLabel="name"
+            ></p-selectButton>
+          </div>
+        </div>
+      </div>
+      <div class="p-field-radiobutton">
+        <p-radioButton name="city" value="2Loose" [(ngModel)]="result" id="3" (ngModelChange)="checkRadioButton($event)"></p-radioButton>
+        <label for="3"> 2 perdants</label>
+      </div>
+    <ng-template pTemplate="footer">
+      <div class="flex justify-content-center">
+        <button pButton label="Valider" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-success" (click)="validateExtraInfo()" [disabled]="form?.invalid" ></button>
+      </div>
+    </ng-template>
+  </p-dialog>
 
 </p-card>
