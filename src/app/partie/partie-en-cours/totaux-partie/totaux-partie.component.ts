@@ -17,4 +17,14 @@ export class TotauxPartieComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  checkIfDataValid(): boolean {
+    if (this.players && this.players.length > 0) {
+      let total = 0;
+      this.players.forEach(p => {
+        total += p.score;
+      })
+      return total === 0;
+    }
+    return false;
+  }
 }

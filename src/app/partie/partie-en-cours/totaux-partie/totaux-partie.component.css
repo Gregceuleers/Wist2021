@@ -6,3 +6,8 @@ td {
   color: #145ecb;
   font-weight: bold;
 }
+.check-data {
+  display: block;
+  right: 30px;
+  bottom: 30px;
+}
