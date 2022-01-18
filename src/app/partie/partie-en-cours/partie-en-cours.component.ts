@@ -42,7 +42,8 @@ export class PartieEnCoursComponent implements OnInit {
           this.generatePlayersDataInit(this.currentGame.players);
         } else {
           console.log(this.currentGame);
-          this.players = this.currentGame.frames[this.currentGame.currentFrame - 2].framePlayerResultList;
+          this.players = this.currentGame.frames[this.currentGame.currentFrame - 2].framePlayerResultList
+            .sort((a, b) => b.score - a.score);
         }
       }
 
@@ -56,7 +57,8 @@ export class PartieEnCoursComponent implements OnInit {
       this.gameService.addFrameToGame(frame,this.currentGame.id).subscribe(game => {
         this.currentGame = game;
         this.showGame = true;
-        this.players = this.currentGame.frames[this.currentGame.currentFrame - 2].framePlayerResultList;
+        this.players = this.currentGame.frames[this.currentGame.currentFrame - 2].framePlayerResultList
+          .sort((a, b) => b.score - a.score);
          console.log(this.currentGame);
       })
     }

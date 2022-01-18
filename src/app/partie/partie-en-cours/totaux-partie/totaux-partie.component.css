@@ -1,3 +1,8 @@
 td {
   line-height: 0;
+
+}
+.score {
+  color: #145ecb;
+  font-weight: bold;
 }
