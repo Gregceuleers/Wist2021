@@ -61,5 +61,12 @@
       </div>
     </ng-template>
   </p-dialog>
-
+  <p-dialog [(visible)]="endGame" [style]="{width: '90vw', height: '60vh'}" [baseZIndex]="10000">
+    <ng-template pTemplate="header">
+      <h3 style="font-weight: 600">Fin de la pertie</h3>
+    </ng-template>
+    <div class="p-fluid">
+      <button pButton label="Valider" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-secondary" (click)="end()" [disabled]="checkValidationExtraDialog()" ></button>
+    </div>
+  </p-dialog>
 </div>

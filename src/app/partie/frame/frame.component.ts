@@ -17,8 +17,10 @@ export class FrameComponent implements OnInit {
   @Input() frames: Frame[] = [];
   @Input() players: Player[] = [];
   @Input() dealer: Player | undefined;
+  @Input() endGame = false;
 
   @Output() sendOutputData: EventEmitter<Frame> = new EventEmitter<Frame>();
+  @Output() sendEndGame: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   index: number = 1;
   gameId: number | undefined = 0;
@@ -32,6 +34,7 @@ export class FrameComponent implements OnInit {
   messageDialog = '';
   winnerExtraResult: any;
   looserExtraResult: any;
+
 
   constructor(
     private gameService: GameService,
@@ -244,5 +247,9 @@ export class FrameComponent implements OnInit {
       if (!this.winnerExtraResult) return true;
     }
     return false;
+  }
+
+  end(): void {
+    this.sendEndGame.emit(true);
   }
 }

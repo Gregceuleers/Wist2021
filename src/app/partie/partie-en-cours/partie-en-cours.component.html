@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <app-frame *ngIf="showGame" [players]="currentGame.players" [frames]="currentGame.frames" (sendOutputData)="collectOutputData($event)"></app-frame>
+    <app-frame *ngIf="showGame" [players]="currentGame.players" [endGame]="endGame" [frames]="currentGame.frames" (sendOutputData)="collectOutputData($event)"></app-frame>
 
     <router-outlet></router-outlet>
   </p-card>
