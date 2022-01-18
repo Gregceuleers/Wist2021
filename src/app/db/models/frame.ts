@@ -10,4 +10,7 @@ export interface Frame {
   wistGameInfoLabel: string;
   framePlayerResultList: PlayerFrameResult[];
   framePlayers: Player[];
+  typeExtraGame?: string;
+  winnerExtraGame?: Player;
+  looserExtraGame?: Player;
 }

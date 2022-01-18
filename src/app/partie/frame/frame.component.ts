@@ -23,13 +23,15 @@ export class FrameComponent implements OnInit {
   index: number = 1;
   gameId: number | undefined = 0;
   form: FormGroup | undefined;
-  result: string | undefined;
+  extraResult: string | undefined;
   typesGame = typesManche;
   framePlayers: Player[] = [];
   extraFramePlayers: Player[] = [];
   showExtraInfoDialog = false;
   showExtraPlayersDialog = false;
   messageDialog = '';
+  winnerExtraResult: any;
+  looserExtraResult: any;
 
   constructor(
     private gameService: GameService,
@@ -104,32 +106,21 @@ export class FrameComponent implements OnInit {
     return (this.players.length === 5) ? inactivePlayer.name : undefined;
   }
 
-  private checkIfOpenExtraPointDialog(isSuccess: boolean, wistGameInfoLabel: string): boolean {
-    if (isSuccess) {
-      switch (wistGameInfoLabel) {
-        case 'Petite misère à 2':
-        case 'Grande misère à 2':
-        case 'Piccolo à 2':
-        case 'Piccolissimo à 2':
-          return true;
-      }
-    } else {
-      switch (wistGameInfoLabel) {
-        case 'Petite misère à 2':
-        case 'Grande misère à 2':
-        case 'Piccolo à 2':
-        case 'Piccolissimo à 2':
-          return  true;
-      }
+  checkIfOpenExtraPointDialog(form: FormGroup): boolean {
+    switch (form.get('typeGame')?.value?.label) {
+      case 'Petite misère à 2':
+      case 'Grande misère à 2':
+      case 'Piccolo à 2':
+      case 'Piccolissimo à 2':
+        return true;
     }
+
 
     return false;
   }
 
   submit(event: Event): void {
-    console.log();
 
-    // if (this.form?.valid) {
     switch ((event as SubmitEvent)?.submitter?.innerText) {
       case 'Réussite':
         this.messageDialog = 'Réussite';
@@ -142,22 +133,17 @@ export class FrameComponent implements OnInit {
           acceptLabel: 'Confirmer',
           rejectLabel: 'Refuser',
           accept: () => {
-            if (this.checkIfOpenExtraPointDialog(true, this.form?.get('typeGame')?.value.label)) {
-              this.showExtraInfoDialog = true;
-
-            } else {
-              this.sendOutputData.emit({
-                dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
-                inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
-                gameId: this.gameId,
-                wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
-                isSuccess: true,
-                framePlayerResultList: [],
-                framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
-              } as Frame);
-              this.resetForm();
-              this.index++;
-            }
+            this.sendOutputData.emit({
+              dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
+              inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
+              gameId: this.gameId,
+              wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
+              isSuccess: true,
+              framePlayerResultList: [],
+              framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
+            } as Frame);
+            this.resetForm();
+            this.index++;
 
           },
           reject: () => {
@@ -191,13 +177,14 @@ export class FrameComponent implements OnInit {
           }
         })
         break;
+      case 'Valider':
+        this.showExtraInfoDialog = true;
+        break;
     }
   }
 
-  // }
 
   setFramePlayers($event: any): void {
-    console.log($event);
     if (this.players.length === 5) {
       this.framePlayers = [];
       this.players.forEach(p => {
@@ -211,40 +198,51 @@ export class FrameComponent implements OnInit {
   }
 
   validateExtraInfo(): void {
-    if (this.messageDialog) {
-      this.sendOutputData.emit({
-        dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
-        inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
-        gameId: this.gameId,
-        wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
-        isSuccess: true,
-        framePlayerResultList: [],
-        framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
-      } as Frame);
-    } else {
-      this.sendOutputData.emit({
-        dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
-        inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
-        gameId: this.gameId,
-        wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
-        isSuccess: false,
-        framePlayerResultList: [],
-        framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
-      } as Frame);
+
+    // Affectation des data à envoyer
+
+    if (this.winnerExtraResult) {
+      this.looserExtraResult = this.extraFramePlayers.find(p => p !== this.winnerExtraResult);
     }
+
+    this.sendOutputData.emit({
+      dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
+      inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
+      gameId: this.gameId,
+      wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
+      framePlayerResultList: [],
+      framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value],
+      typeExtraGame: this.extraResult,
+      winnerExtraGame: this.winnerExtraResult,
+      looserExtraGame: this.looserExtraResult
+    } as Frame);
+
 
     this.resetForm();
     this.index++;
+
+    this.showExtraInfoDialog = false;
   }
 
   checkRadioButton(value: any) {
     switch (value) {
       case '1Win1Loose':
+        this.winnerExtraResult = undefined;
+        this.looserExtraResult = undefined;
         this.showExtraPlayersDialog = true;
         this.extraFramePlayers = (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
         break;
       default:
+        this.winnerExtraResult = undefined;
+        this.looserExtraResult = undefined;
         this.showExtraPlayersDialog = false;
     }
+  }
+
+  checkValidationExtraDialog(): boolean {
+    if (this.extraResult === '1Win1Loose') {
+      if (!this.winnerExtraResult) return true;
+    }
+    return false;
   }
 }

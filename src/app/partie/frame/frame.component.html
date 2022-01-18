@@ -20,10 +20,12 @@
           <p-multiSelect inputId="player" [options]="framePlayers"  (onChange)="checkValidity()" optionLabel="name"
                          placeholder="Sélection des 2 joueurs" formControlName="players"></p-multiSelect>
         </div>
-        <div class="buttons">
+        <div class="buttons" *ngIf="!checkIfOpenExtraPointDialog(form)">
           <button pButton label="Réussite" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-success" [disabled]="form.invalid" ></button>
           <button pButton label="Echec" icon="pi pi-times-circle" iconPos="right" class="p-button-outlined p-button-danger" [disabled]="form.invalid" ></button>
-
+        </div>
+        <div class="buttons" *ngIf="checkIfOpenExtraPointDialog(form)">
+          <button pButton label="Valider " icon="pi pi-times-circle" iconPos="right" class="p-button-outlined p-button-danger" [disabled]="form.invalid" ></button>
         </div>
       </form>
     </ng-container>
@@ -35,27 +37,27 @@
       <h3 style="font-weight: 600">Confirmation supplémentaire</h3>
     </ng-template>
       <div class="p-field-radiobutton">
-        <p-radioButton name="city" value="2Win" [(ngModel)]="result" id="1" (ngModelChange)="checkRadioButton($event)"></p-radioButton>
+        <p-radioButton name="checkPlayer" value="2Win" [(ngModel)]="extraResult" id="1" (ngModelChange)="checkRadioButton($event)"></p-radioButton>
         <label for="1"> 2 gagnants</label>
       </div>
       <div class="p-field-radiobutton">
-        <p-radioButton name="city" value="1Win1Loose" [(ngModel)]="result" id="2" (ngModelChange)="checkRadioButton($event)"></p-radioButton>
+        <p-radioButton name="checkPlayer" value="1Win1Loose" [(ngModel)]="extraResult" id="2" (ngModelChange)="checkRadioButton($event)"></p-radioButton>
         <label for="2"> 1 gagnant / 1 perdant</label>
         <div *ngIf="showExtraPlayersDialog" style="margin-top: 1.7em">
           <div class="p-field flex justify-content-around">
             <label style="font-weight: 600; font-size: 1.1em; padding-right: 0.7em">Vainqueur </label>
-            <p-selectButton [options]="extraFramePlayers" optionLabel="name"
+            <p-selectButton [options]="extraFramePlayers" optionLabel="name" [(ngModel)]="winnerExtraResult"
             ></p-selectButton>
           </div>
         </div>
       </div>
       <div class="p-field-radiobutton">
-        <p-radioButton name="city" value="2Loose" [(ngModel)]="result" id="3" (ngModelChange)="checkRadioButton($event)"></p-radioButton>
+        <p-radioButton name="checkPlayer" value="2Loose" [(ngModel)]="extraResult" id="3" (ngModelChange)="checkRadioButton($event)"></p-radioButton>
         <label for="3"> 2 perdants</label>
       </div>
     <ng-template pTemplate="footer">
       <div class="flex justify-content-center">
-        <button pButton label="Valider" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-success" (click)="validateExtraInfo()" [disabled]="form?.invalid" ></button>
+        <button pButton label="Valider" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-success" (click)="validateExtraInfo()" [disabled]="checkValidationExtraDialog()" ></button>
       </div>
     </ng-template>
   </p-dialog>
