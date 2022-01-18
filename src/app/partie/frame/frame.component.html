@@ -25,7 +25,7 @@
           <button pButton label="Echec" icon="pi pi-times-circle" iconPos="right" class="p-button-outlined p-button-danger" [disabled]="form.invalid" ></button>
         </div>
         <div class="buttons" *ngIf="checkIfOpenExtraPointDialog(form)">
-          <button pButton label="Valider " icon="pi pi-times-circle" iconPos="right" class="p-button-outlined p-button-danger" [disabled]="form.invalid" ></button>
+          <button pButton label="Valider " icon="pi pi-times-circle" iconPos="right" class="p-button-outlined p-button-secondary" [disabled]="form.invalid" ></button>
         </div>
       </form>
     </ng-container>
@@ -63,10 +63,10 @@
   </p-dialog>
   <p-dialog [(visible)]="endGame" [style]="{width: '90vw', height: '60vh'}" [baseZIndex]="10000">
     <ng-template pTemplate="header">
-      <h3 style="font-weight: 600">Fin de la pertie</h3>
+      <h3 style="font-weight: 600">Fin de la partie</h3>
     </ng-template>
     <div class="p-fluid">
-      <button pButton label="Valider" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-secondary" (click)="end()" [disabled]="checkValidationExtraDialog()" ></button>
+      <button pButton label="Valider" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-secondary" (click)="end()" ></button>
     </div>
   </p-dialog>
 </div>

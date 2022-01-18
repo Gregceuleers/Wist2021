@@ -66,5 +66,8 @@ export class GameService {
     return this.httpClient.put<Game>(BaseURL + "games/" + gameId + "/frames", frame);
   }
 
+  updateEndCurrentGame(game: Game, gameId: number | undefined): Observable<Boolean> {
+    return this.httpClient.put<Boolean>(BaseURL + "games/" + gameId + "/frames/end", game);
+  }
 
 }

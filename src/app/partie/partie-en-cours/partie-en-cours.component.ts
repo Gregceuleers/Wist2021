@@ -4,6 +4,7 @@ import {Game, GameState} from "../../db/models/game";
 import {Player} from "../../db/models/player";
 import {PlayerFrameResult} from "../../db/models/player-frame-result";
 import {Frame} from "../../db/models/frame";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-partie-en-cours',
@@ -19,7 +20,8 @@ export class PartieEnCoursComponent implements OnInit {
   endGame = false;
 
   constructor(
-    private gameService: GameService
+    private gameService: GameService,
+    private router: Router
   ) {
   }
 
@@ -52,25 +54,41 @@ export class PartieEnCoursComponent implements OnInit {
   }
 
   nextFrame(frame: Frame): void {
-    if (this.currentGame?.id) {
-      this.currentGame.currentFrame++;
-     // console.log(frame);
-      this.gameService.addFrameToGame(frame,this.currentGame.id).subscribe(game => {
-        this.currentGame = game;
-        if (this.currentGame.currentFrame > this.currentGame.framesNumber) {
-          this.endGame = true;
-        }
-        this.showGame = true;
-        this.players = this.currentGame.frames[this.currentGame.currentFrame - 2].framePlayerResultList
-          .sort((a, b) => b.score - a.score);
-         console.log(this.currentGame);
-      })
-    }
+    // if (this.currentGame?.currentFrame && this.currentGame.framesNumber && this.currentGame.id) {
+    //   if (this.currentGame.currentFrame > this.currentGame.framesNumber) {
+    //     this.gameService.addFrameToGame(frame, this.currentGame.id).subscribe(game => {
+    //       this.currentGame = game;
+    //       this.endGame = true;
+    //       this.showGame = false;
+    //       this.gameService.updateEndCurrentGame(this.currentGame, this.currentGame.id).subscribe(result => {
+    //         if (result) {
+    //
+    //         }
+    //       })
+    //       console.log(this.currentGame);
+    //     })
+    //
+    //   }
+    // } else {
+      if (this.currentGame?.id) {
+        this.currentGame.currentFrame++;
+        // console.log(frame);
+        this.gameService.addFrameToGame(frame, this.currentGame.id).subscribe(game => {
+          this.currentGame = game;
+          if (this.currentGame.currentFrame > this.currentGame.framesNumber) {
+            this.endGame = true;
+          }
+          this.showGame = true;
+          this.players = this.currentGame.frames[this.currentGame.currentFrame - 2].framePlayerResultList
+            .sort((a, b) => b.score - a.score);
+          console.log(this.currentGame);
+        })
+      }
+    // }
+
+
   }
 
-  private saveEndGameToDB(game: Game | undefined): void {
-
-  }
 
   collectOutputData(data: Frame): void {
     console.log(data);
@@ -78,10 +96,17 @@ export class PartieEnCoursComponent implements OnInit {
     this.nextFrame(data);
   }
 
-  collectEndGame(data: boolean): void {
-    if (this.currentGame?.state) {
-      this.currentGame.state = GameState.TERMINEE;
+  collectSendEndData($event: boolean): void {
+    if ($event) {
+      if (this.currentGame?.state) {
+        this.currentGame.state = GameState.TERMINEE;
+        this.gameService.updateEndCurrentGame(this.currentGame, this.currentGame.id).subscribe(result => {
+          if (result) {
+            this.router.navigate(['']).then();
+          }
+        })
+      }
     }
-   this.saveEndGameToDB(this.currentGame);
+
   }
 }
