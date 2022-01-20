@@ -12,6 +12,7 @@ export class NombrePartiesComponent implements OnInit {
 
   form: FormGroup;
   nombreParties: any[] = [
+    {name: 'TEST', value: 2},
     { name: '12', value:12 },
     { name: '18', value: 18 },
     { name: '24', value: 24 },
