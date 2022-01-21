@@ -4,6 +4,7 @@ import {Observable, Subject} from "rxjs";
 import {Frame} from "../models/frame";
 import {HttpClient} from "@angular/common/http";
 import {BaseURL} from "./config";
+import {EndResultPlayer} from "../models/end-result-player";
 
 @Injectable({
   providedIn: 'root'
@@ -66,8 +67,12 @@ export class GameService {
     return this.httpClient.put<Game>(BaseURL + "games/" + gameId + "/frames", frame);
   }
 
-  updateEndCurrentGame(game: Game, gameId: number | undefined): Observable<Boolean> {
+  updateEndCurrentGame(game: Game | undefined, gameId: number | undefined): Observable<Boolean> {
     return this.httpClient.put<Boolean>(BaseURL + "games/" + gameId + "/frames/end", game);
+  }
+
+  updateEndPlayersPointsGame(results: any[], gameId: number | undefined): Observable<Boolean> {
+    return this.httpClient.put<Boolean>(BaseURL + "games/" + gameId + "/players/end", results);
   }
 
 }

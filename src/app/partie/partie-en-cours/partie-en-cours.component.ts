@@ -104,12 +104,17 @@ export class PartieEnCoursComponent implements OnInit {
     if ($event) {
       if (this.currentGame?.state) {
         this.currentGame.state = GameState.TERMINEE;
-
-        this.gameService.updateEndCurrentGame(this.currentGame, this.currentGame.id).subscribe(result => {
-          if (result) {
-            this.router.navigate(['']).then();
+        this.gameService.updateEndPlayersPointsGame(this.resultEndGamePlayers, this.currentGame?.id).subscribe(done => {
+          if (done) {
+            this.gameService.updateEndCurrentGame(this.currentGame, this.currentGame?.id).subscribe(result => {
+              if (result) {
+                this.router.navigate(['']).then();
+              }
+            })
           }
         })
+
+
       }
     }
 
