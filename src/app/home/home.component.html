@@ -3,7 +3,22 @@
 
   <div class="infos">
     <p-card header="Tableau des résultats" class="infos-card">
-
+      <p-table [value]="players" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nom</th>
+            <th>Total</th>
+            <th>Parties</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-player>
+          <tr>
+            <td>{{player.name}}</td>
+            <td style="font-weight: 600">{{player.totalPoints}}</td>
+            <td>{{player.nombrePartiesJouees}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </p-card>
     <p-card header="Parties jouées" class="infos-card"></p-card>
     <p-card header="Règles" class="infos-card"></p-card>

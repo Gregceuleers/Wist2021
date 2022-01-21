@@ -14,6 +14,9 @@
   max-width: 33%;
   width: 33%;
 }
+td {
+  line-height: 0;
+}
 
 @media screen and (max-width : 640px){
   .infos {
