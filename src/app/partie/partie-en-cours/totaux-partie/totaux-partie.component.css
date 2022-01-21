@@ -2,6 +2,9 @@ td {
   line-height: 0;
 
 }
+th {
+  font-size: 0.8em;
+}
 .score {
   color: #145ecb;
   font-weight: bold;

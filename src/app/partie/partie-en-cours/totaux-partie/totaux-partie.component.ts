@@ -13,8 +13,10 @@ export class TotauxPartieComponent implements OnInit {
 
   @Input() frames: Frame[] = [];
   @Input() players: PlayerFrameResult[] = [];
+  showGameDataDialog = false;
 
   ngOnInit(): void {
+
   }
 
   checkIfDataValid(): boolean {
@@ -26,5 +28,13 @@ export class TotauxPartieComponent implements OnInit {
       return total === 0;
     }
     return false;
+  }
+
+  openGameDataDialog(): void {
+    this.showGameDataDialog = true;
+  }
+
+  close(): void {
+    this.showGameDataDialog = false;
   }
 }
