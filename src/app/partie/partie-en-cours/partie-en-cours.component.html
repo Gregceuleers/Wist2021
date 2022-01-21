@@ -19,6 +19,7 @@
                [players]="currentGame.players"
                [endGame]="endGame"
                [frames]="currentGame.frames"
+               [endGameResults]="resultEndGamePlayers"
                (sendOutputData)="collectOutputData($event)"
                (sendEndGame)="collectSendEndData($event)"
              ></app-frame>

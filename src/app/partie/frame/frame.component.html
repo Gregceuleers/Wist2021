@@ -61,12 +61,33 @@
       </div>
     </ng-template>
   </p-dialog>
-  <p-dialog [(visible)]="endGame" [style]="{width: '90vw', height: '60vh'}" [baseZIndex]="10000">
+  <p-dialog [(visible)]="endGame" [style]="{width: '90vw', height: '60vh'}" [baseZIndex]="10000" (onHide)="end()">
     <ng-template pTemplate="header">
       <h3 style="font-weight: 600">Fin de la partie</h3>
     </ng-template>
-    <div class="p-fluid">
-      <button pButton label="Valider" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-secondary" (click)="end()" ></button>
+    <div>
+      <p-table [value]="endGameResults" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nom</th>
+            <th>Points Totaux</th>
+            <th>Points gagnés</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-result>
+          <tr>
+            <td>{{result.player.name}}</td>
+            <td>{{result.player.totalPoints}}</td>
+            <td>{{result.score}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
+    <ng-template pTemplate="footer">
+      <div class="p-fluid">
+        <button pButton label="Terminer" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-secondary" (click)="end()" ></button>
+      </div>
+    </ng-template>
+
   </p-dialog>
 </div>

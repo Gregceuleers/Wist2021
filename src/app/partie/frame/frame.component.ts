@@ -5,6 +5,7 @@ import {GameService} from "../../db/services/game.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {typesManche} from "../../db/services/config";
 import {ConfirmationService} from "primeng/api";
+import {EndResultPlayer} from "../../db/models/end-result-player";
 
 @Component({
   selector: 'app-frame',
@@ -17,6 +18,7 @@ export class FrameComponent implements OnInit {
   @Input() frames: Frame[] = [];
   @Input() players: Player[] = [];
   @Input() dealer: Player | undefined;
+  @Input() endGameResults: EndResultPlayer[] = [];
   @Input() endGame = false;
 
   @Output() sendOutputData: EventEmitter<Frame> = new EventEmitter<Frame>();
