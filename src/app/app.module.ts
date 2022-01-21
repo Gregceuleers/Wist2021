@@ -8,7 +8,6 @@ import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {PrimeConfigModule} from './prime/prime-config/prime-config.module';
 import {PartieComponent} from './partie/partie.component';
-import {MessageService} from "primeng/api";
 import {SelectionJoueursComponent} from './partie/selection-joueurs/selection-joueurs.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
@@ -17,9 +16,9 @@ import {ConfirmationPartieComponent} from './partie/confirmation-partie/confirma
 import {PartieEnCoursComponent} from './partie/partie-en-cours/partie-en-cours.component';
 import {HttpClientModule} from "@angular/common/http";
 import localeFr from '@angular/common/locales/fr';
-import { TotauxPartieComponent } from './partie/partie-en-cours/totaux-partie/totaux-partie.component';
-import { FrameComponent } from './partie/frame/frame.component';
-import { InfoPointsPartieComponent } from './partie/partie-en-cours/info-points-partie/info-points-partie.component';
+import {TotauxPartieComponent} from './partie/partie-en-cours/totaux-partie/totaux-partie.component';
+import {FrameComponent} from './partie/frame/frame.component';
+import {InfoPointsPartieComponent} from './partie/partie-en-cours/info-points-partie/info-points-partie.component';
 
 registerLocaleData(localeFr, 'fr');
 

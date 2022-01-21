@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {typesManche} from "../../db/services/config";
 import {ConfirmationService} from "primeng/api";
 import {EndResultPlayer} from "../../db/models/end-result-player";
+import {only2SelectedPlayerValidation} from "./custom-validators";
 
 @Component({
   selector: 'app-frame',
@@ -36,6 +37,7 @@ export class FrameComponent implements OnInit {
   messageDialog = '';
   winnerExtraResult: any;
   looserExtraResult: any;
+  validation2Players: Player[] = [];
 
 
   constructor(
@@ -52,7 +54,7 @@ export class FrameComponent implements OnInit {
     this.form = this.builder.group({
       dealer: [null, Validators.required],
       typeGame: [null, Validators.required],
-      players: [null, Validators.required]
+      players: [null, [Validators.required]]
     });
 
     this.gameService.getCurrentGame().subscribe(current => {
@@ -254,4 +256,5 @@ export class FrameComponent implements OnInit {
   end(): void {
     this.sendEndGame.emit(true);
   }
+
 }
