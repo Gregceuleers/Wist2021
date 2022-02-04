@@ -6,7 +6,7 @@ export interface Frame {
   dealer: string;
   gameId?: number;
   inactivePlayer?: string;
-  isSuccess?: boolean;
+  success?: boolean;
   wistGameInfoLabel: string;
   framePlayerResultList: PlayerFrameResult[];
   framePlayers: Player[];

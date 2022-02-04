@@ -59,6 +59,10 @@ export class GameService {
     return this.httpClient.get<Game>(BaseURL + "games/current");
   }
 
+  getAllGames_Statistics(): Observable<Game[]> {
+    return this.httpClient.get<Game[]>(BaseURL + "games");
+  }
+
   updateCurrentGame(game: Game): Observable<Game> {
     return this.httpClient.put<Game>(BaseURL + "games", game)
   }

@@ -145,7 +145,7 @@ export class FrameComponent implements OnInit {
               inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
               gameId: this.gameId,
               wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
-              isSuccess: true,
+              success: true,
               framePlayerResultList: [],
               framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
             } as Frame);
@@ -173,7 +173,7 @@ export class FrameComponent implements OnInit {
               inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
               gameId: this.gameId,
               wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
-              isSuccess: false,
+              success: false,
               framePlayerResultList: [],
               framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
             } as Frame);

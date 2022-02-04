@@ -20,7 +20,25 @@
         </ng-template>
       </p-table>
     </p-card>
-    <p-card header="Parties jouées" class="infos-card"></p-card>
+    <p-card header="Statistiques" class="infos-card">
+      <div class="flex justify-content-between align-items-center">
+        <p>Parties jouées</p>
+        <p>{{playedGames.length}}</p>
+      </div>
+      <div class="flex justify-content-between align-items-center">
+        <p>Manches jouées</p>
+        <p>{{statisticsService.countAllPlayedFrames(playedGames)}}</p>
+      </div>
+      <div class="flex justify-content-between align-items-center">
+        <p>Manches gagnées</p>
+        <p>{{statisticsService.countAllSuccessOrDefeatFrames(playedGames, true)}}</p>
+      </div>
+      <div class="flex justify-content-between align-items-center">
+        <p>Manches perdues</p>
+        <p>{{statisticsService.countAllSuccessOrDefeatFrames(playedGames, false)}}</p>
+      </div>
+
+    </p-card>
     <p-card header="Règles" class="infos-card"></p-card>
   </div>
 <!--  <ng-template pTemplate="header">-->

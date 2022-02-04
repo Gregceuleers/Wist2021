@@ -18,6 +18,10 @@ td {
   line-height: 0;
 }
 
+div > p {
+  margin: 0.1em;
+}
+
 @media screen and (max-width : 640px){
   .infos {
     display: flex;
