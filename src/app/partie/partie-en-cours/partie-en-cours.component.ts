@@ -84,7 +84,7 @@ export class PartieEnCoursComponent implements OnInit {
 
         this.showGame = true;
         this.players = this.currentGame.frames[this.currentGame.currentFrame - 2].framePlayerResultList
-          .sort((a, b) => b.score - a.score);
+          // .sort((a, b) => b.score - a.score);
         console.log(this.currentGame);
       })
     }

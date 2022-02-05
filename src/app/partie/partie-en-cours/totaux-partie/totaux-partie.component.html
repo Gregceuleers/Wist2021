@@ -12,7 +12,7 @@
   <ng-template pTemplate="body" let-p>
     <tr>
       <td>{{p.player.name}}</td>
-      <td class="score">{{p.score}}</td>
+      <td class="score" style="text-align: center">{{p.score}}</td>
     </tr>
   </ng-template>
 </p-table>
@@ -24,12 +24,12 @@
     <p-table [value]="frames" responsiveLayout="scroll">
       <ng-template pTemplate="header">
         <tr>
-          <th *ngFor="let col of players">{{col.player.name}}</th>
+          <th *ngFor="let col of players" style="text-align: center">{{col.player.name}}</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-frame>
         <tr>
-          <td *ngFor="let info of frame.framePlayerResultList">
+          <td *ngFor="let info of frame.framePlayerResultList" style="text-align: center">
             {{info.score}}
           </td>
         </tr>
