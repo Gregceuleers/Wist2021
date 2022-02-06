@@ -39,15 +39,9 @@
       </div>
 
     </p-card>
-    <p-card header="Dernière partie" subheader="{{latestPlayedGame?.created | date : 'd MMM yyyy'}}" class="infos-card" *ngIf="latestPlayedGame">
-      <ng-template pTemplate="footer">
-        <h3>{{displayGameState(gameStatusChecked)}}</h3>
-      </ng-template>
+    <p-card header="Dernière partie" subheader="{{latestPlayedGame?.created | date : 'd MMM yyyy'}} {{messageDernierePartie}}" class="infos-card" *ngIf="latestPlayedGame">
       <p-chart type="line" [data]="latestPlayedGameData" [options]="latestPlayedGameOptions"></p-chart>
     </p-card>
   </div>
-<!--  <ng-template pTemplate="header">-->
-<!--    <img src="assets/images/cartes.webp" class="p-mr-2">-->
-<!--  </ng-template>-->
 </p-card>
 

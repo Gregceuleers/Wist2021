@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit {
       }
     }
   };
+  messageDernierePartie = '';
 
   constructor(
     private playerService: PlayerService,
@@ -58,23 +59,20 @@ export class HomeComponent implements OnInit {
         this.playedGames = games.sort((a, b) => b.created - a.created).slice();
         this.latestPlayedGame = this.playedGames[0];
         this.gameStatusChecked = this.latestPlayedGame.state ? this.latestPlayedGame.state : GameState.CREATION;
+        console.log(this.gameStatusChecked);
+        this.messageDernierePartie = this.displayGameState(this.gameStatusChecked);
         this.latestPlayedGameData = this.statisticsService.generateChartDataLatestGame(this.latestPlayedGame);
       }
-      console.log(this.playedGames);
+      // console.log(this.playedGames);
     })
   }
 
   displayGameState(currentState: GameState): string {
-    switch (currentState) {
-      case GameState.CREATION:
-        this.gameStatusChecked = GameState.CREATION;
-        return 'EN CRÉATION'
-      case GameState.TERMINEE:
-        this.gameStatusChecked = GameState.TERMINEE;
-        return 'TERMINÉE';
-      case GameState.EN_COURS:
-        this.gameStatusChecked = GameState.EN_COURS;
-        return 'EN COURS ...';
+    switch (currentState.toString()) {
+      case 'EN_COURS':
+        console.log('coucou');
+        return ' en cours ...';
     }
+    return '';
   }
 }
