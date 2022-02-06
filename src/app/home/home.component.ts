@@ -63,7 +63,6 @@ export class HomeComponent implements OnInit {
         this.messageDernierePartie = this.displayGameState(this.gameStatusChecked);
         this.latestPlayedGameData = this.statisticsService.generateChartDataLatestGame(this.latestPlayedGame);
       }
-      // console.log(this.playedGames);
     })
   }
 
