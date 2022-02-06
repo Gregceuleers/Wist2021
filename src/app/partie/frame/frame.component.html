@@ -34,8 +34,6 @@
       </form>
     </ng-container>
   </ng-container>
-  <p-confirmDialog #cd  [style]="{width: '90vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined">
-  </p-confirmDialog>
   <p-dialog [(visible)]="showInfoDialog" [modal]="true" [baseZIndex]="10000" [style]="{width: '85vw'}" (onHide)="resetFoldData()">
     <div style="text-align: center;">
       <h1 style="padding: 0; margin: 0"><i class="{{isSuccess ? 'pi pi-thumbs-up' : 'pi pi-thumbs-down'}}" style="font-size: 4rem;" [style.color]="isSuccess ? 'green' : 'red'"></i></h1>
@@ -48,7 +46,7 @@
     </div>
     <ng-template pTemplate="footer">
       <div class="flex justify-content-center">
-        <button pButton label="Valider" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-success" (click)="validateGameInfo()" [disabled]="false" ></button>
+        <button pButton label="Valider" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-secondary" (click)="validateGameInfo()" [disabled]="false" ></button>
       </div>
     </ng-template>
   </p-dialog>
@@ -77,7 +75,7 @@
       </div>
     <ng-template pTemplate="footer">
       <div class="flex justify-content-center">
-        <button pButton label="Valider" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-success" (click)="validateExtraInfo()" [disabled]="checkValidationExtraDialog()" ></button>
+        <button pButton label="Valider" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-secondary" (click)="validateExtraInfo()" [disabled]="checkValidationExtraDialog()" ></button>
       </div>
     </ng-template>
   </p-dialog>

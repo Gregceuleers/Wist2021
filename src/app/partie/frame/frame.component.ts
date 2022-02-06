@@ -150,31 +150,7 @@ export class FrameComponent implements OnInit {
         }
         this.messageContentDialog = this.generateConfirmationMessage(this.form?.value, true);
         this.showInfoDialog = true;
-        // this.confirmationService.confirm({
-        //   message: this.generateConfirmationMessage(this.form?.value, true),
-        //   header: 'Confirmation de réussite',
-        //   icon: 'pi pi-thumbs-up',
-        //   acceptButtonStyleClass: 'p-button-outlined p-button-success',
-        //   rejectButtonStyleClass: 'p-button-outlined p-button-danger',
-        //   acceptLabel: 'Confirmer',
-        //   rejectLabel: 'Refuser',
-        //   accept: () => {
-        //     this.sendOutputData.emit({
-        //       dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
-        //       inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
-        //       gameId: this.gameId,
-        //       wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
-        //       success: true,
-        //       framePlayerResultList: [],
-        //       framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
-        //     } as Frame);
-        //     this.resetForm();
-        //     this.index++;
-        //
-        //   },
-        //   reject: () => {
-        //   }
-        // })
+
         break;
       case 'Echec':
         this.isSuccess = false;
@@ -187,30 +163,7 @@ export class FrameComponent implements OnInit {
         }
         this.messageContentDialog = this.generateConfirmationMessage(this.form?.value, false);
         this.showInfoDialog = true;
-        // this.confirmationService.confirm({
-        //   message: this.generateConfirmationMessage(this.form?.value, false),
-        //   header: 'Confirmation de défaite',
-        //   icon: 'pi pi-thumbs-down',
-        //   acceptButtonStyleClass: 'p-button-outlined p-button-success',
-        //   rejectButtonStyleClass: 'p-button-outlined p-button-danger',
-        //   acceptLabel: 'Confirmer',
-        //   rejectLabel: 'Refuser',
-        //   accept: () => {
-        //     this.sendOutputData.emit({
-        //       dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
-        //       inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
-        //       gameId: this.gameId,
-        //       wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
-        //       success: false,
-        //       framePlayerResultList: [],
-        //       framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
-        //     } as Frame);
-        //     this.resetForm();
-        //     this.index++;
-        //   },
-        //   reject: () => {
-        //   }
-        // })
+
         break;
       case 'Valider':
         this.showExtraInfoDialog = true;
@@ -285,8 +238,6 @@ export class FrameComponent implements OnInit {
   }
 
   validateGameInfo(): void {
-
-    console.log(this.generateFoldValue());
 
     switch (this.messageDialog) {
       case 'Réussite':
@@ -397,7 +348,6 @@ export class FrameComponent implements OnInit {
         });
       }
     }
-
 
     return output;
   }
