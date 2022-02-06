@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MenubarModule } from 'primeng/menubar';
-import { CardModule} from 'primeng/card';
-import { ButtonModule} from 'primeng/button';
-import { AvatarModule } from 'primeng/avatar';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {MenubarModule} from 'primeng/menubar';
+import {CardModule} from 'primeng/card';
+import {ButtonModule} from 'primeng/button';
+import {AvatarModule} from 'primeng/avatar';
 import {StepsModule} from "primeng/steps";
 import {MessageModule} from "primeng/message";
 import {ToastModule} from "primeng/toast";
@@ -18,6 +18,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {DialogModule} from "primeng/dialog";
 import {RadioButtonModule} from "primeng/radiobutton";
 import {ChartModule} from "primeng/chart";
+import {PanelModule} from "primeng/panel";
 
 @NgModule({
   declarations: [],
@@ -40,7 +41,8 @@ import {ChartModule} from "primeng/chart";
     ConfirmDialogModule,
     DialogModule,
     RadioButtonModule,
-    ChartModule
+    ChartModule,
+    PanelModule
   ], exports: [
     MenubarModule,
     CardModule,
@@ -59,7 +61,9 @@ import {ChartModule} from "primeng/chart";
     ConfirmDialogModule,
     DialogModule,
     RadioButtonModule,
-    ChartModule
+    ChartModule,
+    PanelModule
   ]
 })
-export class PrimeConfigModule { }
+export class PrimeConfigModule {
+}

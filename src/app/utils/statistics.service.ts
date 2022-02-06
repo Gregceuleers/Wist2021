@@ -37,9 +37,10 @@ export class StatisticsService {
   }
 
   generateChartDataLatestGame(game: Game): { labels: string[], datasets: { label: string, data: number[]}[]} {
+
     const dataSet = [] as { label: string, data: number[], tension: number, borderColor: string, borderWidth: number}[];
-    const label = this.generateLabels(game);
-    const localColors = ['#3631d2', '#e031a3', '#cc5422', '#8a3', '#a85897']
+    const label = this.generateIndexLabels(game);
+    const localColors = ['#3631d2', '#e031a3', '#62d5da', '#8a3', '#a85897']
 
     game.players.forEach((p, index) => {
       dataSet.push({
@@ -56,16 +57,16 @@ export class StatisticsService {
     }
   }
 
-  private generateLabels(game: Game): string[] {
+  private generateIndexLabels(game: Game): string[] {
     let output = [] as string[];
-    for (let i = 1; i <= game.framesNumber; i++) {
+    for (let i = 0; i <= game.framesNumber; i++) {
       output.push(i.toFixed());
     }
     return output;
   }
 
   private generatePlayerData(game: Game, p: Player): number[] {
-    let output = [] as number[];
+    let output = [0] as number[];
 
     game.frames.forEach(frame => {
       frame.framePlayerResultList.forEach(result => {
