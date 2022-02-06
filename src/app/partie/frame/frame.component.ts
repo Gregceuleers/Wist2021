@@ -7,6 +7,7 @@ import {typesManche} from "../../db/services/config";
 import {ConfirmationService} from "primeng/api";
 import {EndResultPlayer} from "../../db/models/end-result-player";
 import {only2SelectedPlayerValidation} from "./custom-validators";
+import {outputAst} from "@angular/compiler";
 
 @Component({
   selector: 'app-frame',
@@ -34,10 +35,18 @@ export class FrameComponent implements OnInit {
   extraFramePlayers: Player[] = [];
   showExtraInfoDialog = false;
   showExtraPlayersDialog = false;
+  showInfoDialog = false;
   messageDialog = '';
+  messageInfoDialog = '';
+  messageContentDialog = '';
   winnerExtraResult: any;
+  winnerExtraFoldResult: any;
   looserExtraResult: any;
   validation2Players: Player[] = [];
+  showExtraPointByFold = false;
+  isSuccess = false;
+  folds = [] as any[];
+  messageExtraPointByFold = '';
 
 
   constructor(
@@ -88,7 +97,7 @@ export class FrameComponent implements OnInit {
     this.form?.updateValueAndValidity();
   }
 
-  private generateConfirmationMessage(form: any, aReussi: boolean): string {
+  generateConfirmationMessage(form: any, aReussi: boolean): string {
     console.log(form);
 
     let player, player1, message = '';
@@ -122,74 +131,92 @@ export class FrameComponent implements OnInit {
         return true;
     }
 
-
     return false;
   }
 
   submit(event: Event): void {
 
+    this.folds = [] as any[];
+
     switch ((event as SubmitEvent)?.submitter?.innerText) {
       case 'Réussite':
+        this.isSuccess = true;
         this.messageDialog = 'Réussite';
-        this.confirmationService.confirm({
-          message: this.generateConfirmationMessage(this.form?.value, true),
-          header: 'Confirmation de réussite',
-          icon: 'pi pi-thumbs-up',
-          acceptButtonStyleClass: 'p-button-outlined p-button-success',
-          rejectButtonStyleClass: 'p-button-outlined p-button-danger',
-          acceptLabel: 'Confirmer',
-          rejectLabel: 'Refuser',
-          accept: () => {
-            this.sendOutputData.emit({
-              dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
-              inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
-              gameId: this.gameId,
-              wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
-              success: true,
-              framePlayerResultList: [],
-              framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
-            } as Frame);
-            this.resetForm();
-            this.index++;
-
-          },
-          reject: () => {
-          }
-        })
+        this.messageInfoDialog = " de réussite";
+        this.folds = this.calculateFolds(this.form?.get('typeGame')?.value.label, true);
+        if (this.folds.length > 0) {
+          this.showExtraPointByFold = true;
+          this.messageExtraPointByFold = 'supplémentaires';
+        }
+        this.messageContentDialog = this.generateConfirmationMessage(this.form?.value, true);
+        this.showInfoDialog = true;
+        // this.confirmationService.confirm({
+        //   message: this.generateConfirmationMessage(this.form?.value, true),
+        //   header: 'Confirmation de réussite',
+        //   icon: 'pi pi-thumbs-up',
+        //   acceptButtonStyleClass: 'p-button-outlined p-button-success',
+        //   rejectButtonStyleClass: 'p-button-outlined p-button-danger',
+        //   acceptLabel: 'Confirmer',
+        //   rejectLabel: 'Refuser',
+        //   accept: () => {
+        //     this.sendOutputData.emit({
+        //       dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
+        //       inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
+        //       gameId: this.gameId,
+        //       wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
+        //       success: true,
+        //       framePlayerResultList: [],
+        //       framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
+        //     } as Frame);
+        //     this.resetForm();
+        //     this.index++;
+        //
+        //   },
+        //   reject: () => {
+        //   }
+        // })
         break;
       case 'Echec':
+        this.isSuccess = false;
         this.messageDialog = 'Echec';
-        this.confirmationService.confirm({
-          message: this.generateConfirmationMessage(this.form?.value, false),
-          header: 'Confirmation de défaite',
-          icon: 'pi pi-thumbs-down',
-          acceptButtonStyleClass: 'p-button-outlined p-button-success',
-          rejectButtonStyleClass: 'p-button-outlined p-button-danger',
-          acceptLabel: 'Confirmer',
-          rejectLabel: 'Refuser',
-          accept: () => {
-            this.sendOutputData.emit({
-              dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
-              inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
-              gameId: this.gameId,
-              wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
-              success: false,
-              framePlayerResultList: [],
-              framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
-            } as Frame);
-            this.resetForm();
-            this.index++;
-          },
-          reject: () => {
-          }
-        })
+        this.messageInfoDialog = ' d\'échec';
+        this.folds = this.calculateFolds(this.form?.get('typeGame')?.value.label, false);
+        if (this.folds.length > 0) {
+          this.showExtraPointByFold = true;
+          this.messageExtraPointByFold = 'manquantes';
+        }
+        this.messageContentDialog = this.generateConfirmationMessage(this.form?.value, false);
+        this.showInfoDialog = true;
+        // this.confirmationService.confirm({
+        //   message: this.generateConfirmationMessage(this.form?.value, false),
+        //   header: 'Confirmation de défaite',
+        //   icon: 'pi pi-thumbs-down',
+        //   acceptButtonStyleClass: 'p-button-outlined p-button-success',
+        //   rejectButtonStyleClass: 'p-button-outlined p-button-danger',
+        //   acceptLabel: 'Confirmer',
+        //   rejectLabel: 'Refuser',
+        //   accept: () => {
+        //     this.sendOutputData.emit({
+        //       dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
+        //       inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
+        //       gameId: this.gameId,
+        //       wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
+        //       success: false,
+        //       framePlayerResultList: [],
+        //       framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value]
+        //     } as Frame);
+        //     this.resetForm();
+        //     this.index++;
+        //   },
+        //   reject: () => {
+        //   }
+        // })
         break;
       case 'Valider':
         this.showExtraInfoDialog = true;
         break;
     }
   }
-
 
   setFramePlayers($event: any): void {
     if (this.players.length === 5) {
@@ -257,4 +284,133 @@ export class FrameComponent implements OnInit {
     this.sendEndGame.emit(true);
   }
 
+  validateGameInfo(): void {
+
+    console.log(this.generateFoldValue());
+
+    switch (this.messageDialog) {
+      case 'Réussite':
+        this.sendOutputData.emit({
+          dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
+          inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
+          gameId: this.gameId,
+          wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
+          success: true,
+          framePlayerResultList: [],
+          framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value],
+          foldNumber: this.generateFoldValue()
+        } as Frame);
+        this.resetForm();
+        this.index++;
+        break;
+      case 'Echec':
+        this.sendOutputData.emit({
+          dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
+          inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
+          gameId: this.gameId,
+          wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
+          success: false,
+          framePlayerResultList: [],
+          framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value],
+          foldNumber: this.generateFoldValue()
+        } as Frame);
+        this.resetForm();
+        this.index++;
+        break;
+    }
+    this.showInfoDialog = false;
+    this.winnerExtraFoldResult = null;
+  }
+
+  showContentMessage(): string {
+    return this.messageContentDialog;
+  }
+
+  private calculateFolds(wistInfoGameLabel: string, isSuccess: boolean): any[] {
+    let mux = 0;
+    let output = [];
+
+    if (isSuccess) {
+      switch (wistInfoGameLabel) {
+        case 'Emballage à 8':
+          mux = 5;
+          break;
+        case 'Emballage à 9':
+          mux = 4;
+          break;
+        case 'Emballage à 10':
+          mux = 3;
+          break;
+        case 'Emballage à 11':
+          mux = 2;
+          break;
+        case 'Seul 6':
+          mux = 7;
+          break;
+        case 'Seul 7':
+          mux = 6
+          break;
+        case 'Seul 8':
+          mux = 5
+          break;
+      }
+    } else {
+      switch (wistInfoGameLabel) {
+        case 'Emballage à 8':
+          mux = 8;
+          break;
+        case 'Emballage à 9':
+          mux = 9;
+          break;
+        case 'Emballage à 10':
+          mux = 10;
+          break;
+        case 'Emballage à 11':
+          mux = 11;
+          break;
+        case 'Seul 6':
+          mux = 6;
+          break;
+        case 'Seul 7':
+          mux = 7
+          break;
+        case 'Seul 8':
+          mux = 8
+          break;
+      }
+    }
+
+    if (isSuccess) {
+      for (let i = 0; i <= mux; i++) {
+        if (mux != 0) {
+          output.push({
+            name: '+ '+ i,
+            value: i
+          });
+        }
+      }
+    } else {
+      for (let i = 0; i < mux; i++) {
+        output.push({
+          name: '- ' + (i + 1),
+          value: i + 1
+        });
+      }
+    }
+
+
+    return output;
+  }
+
+  private generateFoldValue(): number | null {
+    if (this.winnerExtraFoldResult) {
+      if (this.winnerExtraFoldResult.value === 0) return null;
+        return this.winnerExtraFoldResult.value;
+    } else return null;
+  }
+
+  resetFoldData(): void {
+    this.showExtraPointByFold = false;
+    this.isSuccess = false;
+  }
 }

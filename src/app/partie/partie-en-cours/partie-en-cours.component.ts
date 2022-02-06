@@ -56,22 +56,6 @@ export class PartieEnCoursComponent implements OnInit {
   }
 
   nextFrame(frame: Frame): void {
-    // if (this.currentGame?.currentFrame && this.currentGame.framesNumber && this.currentGame.id) {
-    //   if (this.currentGame.currentFrame > this.currentGame.framesNumber) {
-    //     this.gameService.addFrameToGame(frame, this.currentGame.id).subscribe(game => {
-    //       this.currentGame = game;
-    //       this.endGame = true;
-    //       this.showGame = false;
-    //       this.gameService.updateEndCurrentGame(this.currentGame, this.currentGame.id).subscribe(result => {
-    //         if (result) {
-    //
-    //         }
-    //       })
-    //       console.log(this.currentGame);
-    //     })
-    //
-    //   }
-    // } else {
     if (this.currentGame?.id) {
       this.currentGame.currentFrame++;
       if (this.currentGame.currentFrame > this.currentGame.framesNumber) {

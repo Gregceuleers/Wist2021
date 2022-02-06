@@ -36,6 +36,22 @@
   </ng-container>
   <p-confirmDialog #cd  [style]="{width: '90vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-outlined">
   </p-confirmDialog>
+  <p-dialog [(visible)]="showInfoDialog" [modal]="true" [baseZIndex]="10000" [style]="{width: '85vw'}" (onHide)="resetFoldData()">
+    <div style="text-align: center;">
+      <h1 style="padding: 0; margin: 0"><i class="{{isSuccess ? 'pi pi-thumbs-up' : 'pi pi-thumbs-down'}}" style="font-size: 4rem;" [style.color]="isSuccess ? 'green' : 'red'"></i></h1>
+      <p style="font-weight: bold" [style.color]="isSuccess ? 'green' : 'red'">{{showContentMessage()}}</p>
+      <div *ngIf="showExtraPointByFold" style="margin-top: 1.7em">
+        <p style="font-weight: 600; font-size: 1.1em; margin-bottom: 0.7em;">Nombre de levées {{messageExtraPointByFold}} </p>
+          <p-selectButton [options]="folds" optionLabel="name" [(ngModel)]="winnerExtraFoldResult"
+          ></p-selectButton>
+      </div>
+    </div>
+    <ng-template pTemplate="footer">
+      <div class="flex justify-content-center">
+        <button pButton label="Valider" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-success" (click)="validateGameInfo()" [disabled]="false" ></button>
+      </div>
+    </ng-template>
+  </p-dialog>
   <p-dialog [(visible)]="showExtraInfoDialog" [modal]="true" [style]="{width: '90vw'}" [baseZIndex]="10000">
     <ng-template pTemplate="header">
       <h3 style="font-weight: 600">Confirmation supplémentaire</h3>

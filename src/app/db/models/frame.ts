@@ -13,4 +13,5 @@ export interface Frame {
   typeExtraGame?: string;
   winnerExtraGame?: Player;
   looserExtraGame?: Player;
+  foldNumber?: number;
 }
