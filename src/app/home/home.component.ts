@@ -69,7 +69,6 @@ export class HomeComponent implements OnInit {
   displayGameState(currentState: GameState): string {
     switch (currentState.toString()) {
       case 'EN_COURS':
-        console.log('coucou');
         return ' en cours ...';
     }
     return '';
