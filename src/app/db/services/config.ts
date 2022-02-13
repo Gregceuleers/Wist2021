@@ -2,6 +2,22 @@ export const BaseURL = 'http://localhost:8080/';
 
 export const typesManche = [
   {
+    label: "Mal done",
+    selectionInactive: false,
+    winPoints: 0,
+    loosePoints: -9,
+    winPointsPassif: 3,
+    jeuADeux: false
+  },
+  {
+    label: "Passe",
+    selectionInactive: false,
+    winPoints: 0,
+    loosePoints: 0,
+    winPointsPassif: 0,
+    jeuADeux: false
+  },
+  {
     label: "Trou",
     selectionInactive: false,
     winPoints: 6,

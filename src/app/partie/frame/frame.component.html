@@ -9,20 +9,25 @@
           ></p-selectButton>
         </div>
         <h4>Type de jeu</h4>
-        <p-treeSelect [options]="typesGame" formControlName="typeGame" selectionMode="single"></p-treeSelect>
+        <p-treeSelect [options]="typesGame" formControlName="typeGame" selectionMode="single" (onNodeSelect)="verify($event)"></p-treeSelect>
         <app-info-points-partie [data]="getInfoPoints()"></app-info-points-partie>
 
-        <h4>Joueur(s)</h4>
+
 <!--        <div class="p-field">-->
 <!--          <p-selectButton [options]="framePlayers" optionLabel="name" formControlName="players" [multiple]="!isAlone()"-->
 <!--          ></p-selectButton>-->
 <!--        </div>-->
-        <div class="p-field" *ngIf="isAlone()">
-          <p-dropdown [options]="framePlayers" optionLabel="name" formControlName="players" placeholder="Sélection du joueur"></p-dropdown>
-        </div>
-        <div class="p-field" *ngIf="!isAlone()">
-          <p-listbox [options]="framePlayers"  (onChange)="checkValidity()" optionLabel="name"
-                         [multiple]="true" [metaKeySelection]="false" [checkbox]="true" formControlName="players"></p-listbox>
+        <div [hidden]="showPlayerFormControl">
+          <h4>Joueur(s)</h4>
+          <div class="p-field" *ngIf="isAlone()">
+            <p-dropdown [options]="framePlayers" optionLabel="name" formControlName="players"
+                        placeholder="Sélection du joueur"></p-dropdown>
+          </div>
+          <div class="p-field" *ngIf="!isAlone()">
+            <p-listbox [options]="framePlayers" (onChange)="checkValidity()" optionLabel="name"
+                       [multiple]="true" [metaKeySelection]="false" [checkbox]="true"
+                       formControlName="players"></p-listbox>
+          </div>
         </div>
         <div class="buttons" *ngIf="!checkIfOpenExtraPointDialog(form)">
           <button pButton label="Réussite" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-success" [disabled]="form.invalid" ></button>

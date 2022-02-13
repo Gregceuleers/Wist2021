@@ -6,8 +6,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {typesManche} from "../../db/services/config";
 import {ConfirmationService} from "primeng/api";
 import {EndResultPlayer} from "../../db/models/end-result-player";
-import {only2SelectedPlayerValidation} from "./custom-validators";
-import {outputAst} from "@angular/compiler";
 
 @Component({
   selector: 'app-frame',
@@ -36,6 +34,9 @@ export class FrameComponent implements OnInit {
   showExtraInfoDialog = false;
   showExtraPlayersDialog = false;
   showInfoDialog = false;
+  showExtraPointByFold = false;
+  showPlayerFormControl = false;
+
   messageDialog = '';
   messageInfoDialog = '';
   messageContentDialog = '';
@@ -43,11 +44,11 @@ export class FrameComponent implements OnInit {
   winnerExtraFoldResult: any;
   looserExtraResult: any;
   validation2Players: Player[] = [];
-  showExtraPointByFold = false;
   isSuccess = false;
+  isMaldoneOrPasse = false;
+
   folds = [] as any[];
   messageExtraPointByFold = '';
-
 
   constructor(
     private gameService: GameService,
@@ -102,19 +103,27 @@ export class FrameComponent implements OnInit {
 
     let player, player1, message = '';
 
-    if (this.form?.get('typeGame')?.value.jeuADeux) {
-      const players = (this.form?.get('players')?.value as Player[]);
-      const verbe = aReussi ? ' ont réussi ' : ' ont raté ';
-      player = players !== undefined ? players[0].name : '';
-      player1 = players !== undefined ? players[1].name : '';
-      message = player + ' et ' + player1 + verbe + this.form?.get('typeGame')?.value.label
+    if (this.form?.get('typeGame')?.value.label === 'Passe') {
+      message = 'Tous les joueurs passent ...';
+    } else if (this.form?.get('typeGame')?.value.label === 'Mal done') {
+      message = this.form?.get('players')?.value.name + ' a réalisé une mal done ...';
     } else {
-      const players = (this.form?.get('players')?.value as any);
-      const verbe = aReussi ? ' a réussi ' : ' a raté ';
-      player = players !== undefined ? players.name : '';
-      message = player + verbe + this.form?.get('typeGame')?.value.label
+      if (this.form?.get('typeGame')?.value.jeuADeux) {
+        const players = (this.form?.get('players')?.value as Player[]);
+        const verbe = aReussi ? ' ont réussi ' : ' ont raté ';
+        player = players !== undefined ? players[0].name : '';
+        player1 = players !== undefined ? players[1].name : '';
+        message = player + ' et ' + player1 + verbe + this.form?.get('typeGame')?.value.label
+      } else {
+        const players = (this.form?.get('players')?.value as any);
+        const verbe = aReussi ? ' a réussi ' : ' a raté ';
+        player = players !== undefined ? players.name : '';
+        message = player + verbe + this.form?.get('typeGame')?.value.label
 
+      }
     }
+
+
     return message;
   }
 
@@ -124,6 +133,8 @@ export class FrameComponent implements OnInit {
 
   checkIfOpenExtraPointDialog(form: FormGroup): boolean {
     switch (form.get('typeGame')?.value?.label) {
+      case 'Mal done':
+      case 'Passe':
       case 'Petite misère à 2':
       case 'Grande misère à 2':
       case 'Piccolo à 2':
@@ -166,7 +177,13 @@ export class FrameComponent implements OnInit {
 
         break;
       case 'Valider':
-        this.showExtraInfoDialog = true;
+        if (this.isMaldoneOrPasse) {
+          this.isSuccess = false;
+          this.messageContentDialog = this.generateConfirmationMessage(this.form?.value, true);
+          this.showInfoDialog = true;
+        } else {
+          this.showExtraInfoDialog = true;
+        }
         break;
     }
   }
@@ -239,36 +256,52 @@ export class FrameComponent implements OnInit {
 
   validateGameInfo(): void {
 
-    switch (this.messageDialog) {
-      case 'Réussite':
-        this.sendOutputData.emit({
-          dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
-          inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
-          gameId: this.gameId,
-          wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
-          success: true,
-          framePlayerResultList: [],
-          framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value],
-          foldNumber: this.generateFoldValue()
-        } as Frame);
-        this.resetForm();
-        this.index++;
-        break;
-      case 'Echec':
-        this.sendOutputData.emit({
-          dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
-          inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
-          gameId: this.gameId,
-          wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
-          success: false,
-          framePlayerResultList: [],
-          framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value],
-          foldNumber: this.generateFoldValue()
-        } as Frame);
-        this.resetForm();
-        this.index++;
-        break;
+    if (this.isMaldoneOrPasse) {
+      this.sendOutputData.emit({
+        dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
+        inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
+        gameId: this.gameId,
+        wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
+        framePlayerResultList: [],
+        framePlayers: [this.form?.get('players')?.value ? this.form?.get('players')?.value : this.form?.get('dealer')?.value],
+      } as Frame);
+      this.isMaldoneOrPasse = false;
+      this.resetForm();
+      this.index++;
+    } else {
+      switch (this.messageDialog) {
+        case 'Réussite':
+          this.sendOutputData.emit({
+            dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
+            inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
+            gameId: this.gameId,
+            wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
+            success: true,
+            framePlayerResultList: [],
+            framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value],
+            foldNumber: this.generateFoldValue()
+          } as Frame);
+          this.resetForm();
+          this.index++;
+          break;
+        case 'Echec':
+          this.sendOutputData.emit({
+            dealer: this.form?.get('dealer')?.value ? this.form?.get('dealer')?.value?.name : '',
+            inactivePlayer: this.generateInactivePlayer(this.form?.get('dealer')?.value),
+            gameId: this.gameId,
+            wistGameInfoLabel: this.form?.get('typeGame')?.value.label,
+            success: false,
+            framePlayerResultList: [],
+            framePlayers: (this.form?.get('players')?.value.length) ? this.form?.get('players')?.value : [this.form?.get('players')?.value],
+            foldNumber: this.generateFoldValue()
+          } as Frame);
+          this.resetForm();
+          this.index++;
+          break;
+      }
     }
+
+
     this.showInfoDialog = false;
     this.winnerExtraFoldResult = null;
   }
@@ -335,7 +368,7 @@ export class FrameComponent implements OnInit {
       for (let i = 0; i <= mux; i++) {
         if (mux != 0) {
           output.push({
-            name: '+ '+ i,
+            name: '+ ' + i,
             value: i
           });
         }
@@ -355,12 +388,32 @@ export class FrameComponent implements OnInit {
   private generateFoldValue(): number | null {
     if (this.winnerExtraFoldResult) {
       if (this.winnerExtraFoldResult.value === 0) return null;
-        return this.winnerExtraFoldResult.value;
+      return this.winnerExtraFoldResult.value;
     } else return null;
   }
 
   resetFoldData(): void {
     this.showExtraPointByFold = false;
     this.isSuccess = false;
+  }
+
+  verify(event: any): void {
+    this.showPlayerFormControl = false;
+    if (!this.form?.get('players')?.hasValidator(Validators.required)) {
+      this.form?.get('players')?.addValidators(Validators.required);
+      this.form?.get('players')?.updateValueAndValidity();
+    }
+    switch (event.node.label) {
+      case 'Mal done':
+        this.isMaldoneOrPasse = true;
+        break;
+      case 'Passe':
+        this.isMaldoneOrPasse = true;
+        this.form?.get('players')?.removeValidators(Validators.required);
+        this.form?.get('players')?.updateValueAndValidity();
+        this.showPlayerFormControl = true;
+        break;
+
+    }
   }
 }
