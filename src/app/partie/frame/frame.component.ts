@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {typesManche} from "../../db/services/config";
 import {ConfirmationService} from "primeng/api";
 import {EndResultPlayer} from "../../db/models/end-result-player";
+import {only2SelectedPlayerValidation} from "./custom-validators";
 
 @Component({
   selector: 'app-frame',
@@ -29,7 +30,7 @@ export class FrameComponent implements OnInit {
   form: FormGroup | undefined;
   extraResult: string | undefined;
   typesGame = typesManche;
-  framePlayers: Player[] = [];
+  framePlayers: { player: Player, inactive: boolean }[] = [];
   extraFramePlayers: Player[] = [];
   showExtraInfoDialog = false;
   showExtraPlayersDialog = false;
@@ -59,8 +60,9 @@ export class FrameComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.framePlayers = this.players;
-
+    this.framePlayers = this.players.map(p => {
+      return {player: p, inactive: false}
+    });
     this.form = this.builder.group({
       dealer: [null, Validators.required],
       typeGame: [null, Validators.required],
@@ -76,7 +78,24 @@ export class FrameComponent implements OnInit {
   }
 
   checkValidity(): void {
+    if ('length' in this.form?.get('players')?.value) {
 
+      if (this.form?.get('players')?.value.length >= 2) {
+        for (let p of this.framePlayers as { player: Player, inactive: boolean }[]) {
+          if (!(this.form?.get('players')?.value as { player: Player, inactive: boolean }[]).includes(p)) {
+            p.inactive = true;
+          }
+        }
+      } else {
+        for (let p of this.framePlayers as { player: Player, inactive: boolean }[]) {
+          p.inactive = false;
+        }
+      }
+    } else {
+      console.log(this.form?.get('players')?.value)
+    }
+
+    console.log(this.framePlayers)
   }
 
   getInfoPoints(): any {
@@ -99,25 +118,24 @@ export class FrameComponent implements OnInit {
   }
 
   generateConfirmationMessage(form: any, aReussi: boolean): string {
-    console.log(form);
 
     let player, player1, message = '';
 
     if (this.form?.get('typeGame')?.value.label === 'Passe') {
       message = 'Tous les joueurs passent ...';
     } else if (this.form?.get('typeGame')?.value.label === 'Mal done') {
-      message = this.form?.get('players')?.value.name + ' a réalisé une mal done ...';
+      message = this.form?.get('players')?.value.player.name + ' a réalisé une mal done ...';
     } else {
       if (this.form?.get('typeGame')?.value.jeuADeux) {
-        const players = (this.form?.get('players')?.value as Player[]);
+        const players = (this.form?.get('players')?.value as { player: Player, inactive: boolean }[]);
         const verbe = aReussi ? ' ont réussi ' : ' ont raté ';
-        player = players !== undefined ? players[0].name : '';
-        player1 = players !== undefined ? players[1].name : '';
+        player = players !== undefined ? players[0].player.name : '';
+        player1 = players !== undefined ? players[1].player.name : '';
         message = player + ' et ' + player1 + verbe + this.form?.get('typeGame')?.value.label
       } else {
         const players = (this.form?.get('players')?.value as any);
         const verbe = aReussi ? ' a réussi ' : ' a raté ';
-        player = players !== undefined ? players.name : '';
+        player = players !== undefined ? players.player.name : '';
         message = player + verbe + this.form?.get('typeGame')?.value.label
 
       }
@@ -189,16 +207,31 @@ export class FrameComponent implements OnInit {
   }
 
   setFramePlayers($event: any): void {
+
+    this.form?.get('players')?.reset();
+    this.form?.get('players')?.updateValueAndValidity();
+
+
     if (this.players.length === 5) {
       this.framePlayers = [];
       this.players.forEach(p => {
         if (p.id !== $event.value.id) {
-          this.framePlayers.push(p);
+          this.framePlayers.push({
+            player: p,
+            inactive: false
+          });
         }
       })
     } else {
-      this.framePlayers = this.players;
+      this.framePlayers = this.players.map(p => {
+        return {
+          player: p,
+          inactive: false
+        }
+      });
     }
+    this.resetValidationJeuADeux();
+
   }
 
   validateExtraInfo(): void {
@@ -400,8 +433,30 @@ export class FrameComponent implements OnInit {
     this.isSuccess = false;
   }
 
+  resetValidationJeuADeux(): void {
+    if (this.form?.get('typeGame')?.value && this.form?.get('typeGame')?.value.jeuADeux) {
+      this.form?.get('players')?.addValidators(only2SelectedPlayerValidation(false));
+      this.form?.get('players')?.updateValueAndValidity();
+
+    } else {
+      this.form?.get('players')?.setValidators([Validators.required]);
+      this.form?.get('players')?.updateValueAndValidity();
+      // }
+    }
+    console.log(this.form?.get('players'));
+  }
+
   verify(event: any): void {
     this.hiddenPlayerFormControl = false;
+
+    this.framePlayers = this.framePlayers.map(framePlayer => {
+      return {
+        player: framePlayer.player,
+        inactive: false
+      }
+    });
+
+    this.resetValidationJeuADeux();
 
     if (!this.form?.get('players')?.hasValidator(Validators.required)) {
       this.form?.get('players')?.addValidators(Validators.required);

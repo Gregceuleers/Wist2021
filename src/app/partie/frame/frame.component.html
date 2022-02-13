@@ -5,53 +5,54 @@
       <form class="p-fluid" [formGroup]="form" (submit)="submit($event)">
         <h4>Sélection du donneur</h4>
         <div class="p-field">
-          <p-selectButton [options]="players" optionLabel="name" formControlName="dealer" (onChange)="setFramePlayers($event)"
+          <p-selectButton [options]="players" optionLabel="name" formControlName="dealer"
+                          (onChange)="setFramePlayers($event)"
           ></p-selectButton>
         </div>
         <h4>Type de jeu</h4>
-        <p-treeSelect [options]="typesGame" formControlName="typeGame" selectionMode="single" (onNodeSelect)="verify($event)"></p-treeSelect>
+        <p-treeSelect [options]="typesGame" formControlName="typeGame" selectionMode="single"
+                      (onNodeSelect)="verify($event)"></p-treeSelect>
         <app-info-points-partie [data]="getInfoPoints()"></app-info-points-partie>
 
-
-<!--        <div class="p-field">-->
-<!--          <p-selectButton [options]="framePlayers" optionLabel="name" formControlName="players" [multiple]="!isAlone()"-->
-<!--          ></p-selectButton>-->
-<!--        </div>-->
         <div [hidden]="hiddenPlayerFormControl">
           <h4>Joueur(s)</h4>
-          <div class="p-field" *ngIf="isAlone()">
-            <p-dropdown [options]="framePlayers" optionLabel="name" formControlName="players"
-                        placeholder="Sélection du joueur"></p-dropdown>
+          <div class="p-field">
+            <p-selectButton [options]="framePlayers" optionLabel="player.name" formControlName="players"
+                            [multiple]="!isAlone()" (onChange)="checkValidity()" optionDisabled="inactive"></p-selectButton>
           </div>
-          <div class="p-field" *ngIf="!isAlone()">
-            <p-listbox [options]="framePlayers" (onChange)="checkValidity()" optionLabel="name"
-                       [multiple]="true" [metaKeySelection]="false" [checkbox]="true"
-                       formControlName="players"></p-listbox>
+
+          <div class="buttons" *ngIf="!checkIfOpenExtraPointDialog(form)">
+            <button pButton label="Réussite" icon="pi pi-check-circle" iconPos="right"
+                    class="p-button-outlined p-button-success" [disabled]="form.invalid"></button>
+            <button pButton label="Echec" icon="pi pi-times-circle" iconPos="right"
+                    class="p-button-outlined p-button-danger" [disabled]="form.invalid"></button>
           </div>
-        </div>
-        <div class="buttons" *ngIf="!checkIfOpenExtraPointDialog(form)">
-          <button pButton label="Réussite" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-success" [disabled]="form.invalid" ></button>
-          <button pButton label="Echec" icon="pi pi-times-circle" iconPos="right" class="p-button-outlined p-button-danger" [disabled]="form.invalid" ></button>
         </div>
         <div class="buttons" *ngIf="checkIfOpenExtraPointDialog(form)">
-          <button pButton label="Valider " icon="pi pi-times-circle" iconPos="right" class="p-button-outlined p-button-secondary" [disabled]="form.invalid" ></button>
+          <button pButton label="Valider " icon="pi pi-times-circle" iconPos="right"
+                  class="p-button-outlined p-button-secondary" [disabled]="form.invalid"></button>
         </div>
       </form>
     </ng-container>
   </ng-container>
-  <p-dialog [(visible)]="showInfoDialog" [modal]="true" [baseZIndex]="10000" [style]="{width: '85vw'}" (onHide)="resetFoldData()">
+  <p-dialog [(visible)]="showInfoDialog" [modal]="true" [baseZIndex]="10000" [style]="{width: '85vw'}"
+            (onHide)="resetFoldData()">
     <div style="text-align: center;">
-      <h1 style="padding: 0; margin: 0"><i class="{{isSuccess ? 'pi pi-thumbs-up' : 'pi pi-thumbs-down'}}" style="font-size: 4rem;" [style.color]="isSuccess ? 'green' : 'red'"></i></h1>
+      <h1 style="padding: 0; margin: 0"><i class="{{isSuccess ? 'pi pi-thumbs-up' : 'pi pi-thumbs-down'}}"
+                                           style="font-size: 4rem;" [style.color]="isSuccess ? 'green' : 'red'"></i>
+      </h1>
       <p style="font-weight: bold" [style.color]="isSuccess ? 'green' : 'red'">{{showContentMessage()}}</p>
       <div *ngIf="showExtraPointByFold" style="margin-top: 1.7em">
-        <p style="font-weight: 600; font-size: 1.1em; margin-bottom: 0.7em;">Nombre de levées {{messageExtraPointByFold}} </p>
-          <p-selectButton [options]="folds" optionLabel="name" [(ngModel)]="winnerExtraFoldResult"
-          ></p-selectButton>
+        <p style="font-weight: 600; font-size: 1.1em; margin-bottom: 0.7em;">Nombre de
+          levées {{messageExtraPointByFold}} </p>
+        <p-selectButton [options]="folds" optionLabel="name" [(ngModel)]="winnerExtraFoldResult"
+        ></p-selectButton>
       </div>
     </div>
     <ng-template pTemplate="footer">
       <div class="flex justify-content-center">
-        <button pButton label="Valider" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-secondary" (click)="validateGameInfo()" [disabled]="false" ></button>
+        <button pButton label="Valider" icon="pi pi-check-circle" iconPos="right"
+                class="p-button-outlined p-button-secondary" (click)="validateGameInfo()" [disabled]="false"></button>
       </div>
     </ng-template>
   </p-dialog>
@@ -59,28 +60,33 @@
     <ng-template pTemplate="header">
       <h3 style="font-weight: 600">Confirmation supplémentaire</h3>
     </ng-template>
-      <div class="p-field-radiobutton">
-        <p-radioButton name="checkPlayer" value="2Win" [(ngModel)]="extraResult" id="1" (ngModelChange)="checkRadioButton($event)"></p-radioButton>
-        <label for="1"> 2 gagnants</label>
-      </div>
-      <div class="p-field-radiobutton">
-        <p-radioButton name="checkPlayer" value="1Win1Loose" [(ngModel)]="extraResult" id="2" (ngModelChange)="checkRadioButton($event)"></p-radioButton>
-        <label for="2"> 1 gagnant / 1 perdant</label>
-        <div *ngIf="showExtraPlayersDialog" style="margin-top: 1.7em">
-          <div class="p-field flex justify-content-around">
-            <label style="font-weight: 600; font-size: 1.1em; padding-right: 0.7em">Vainqueur </label>
-            <p-selectButton [options]="extraFramePlayers" optionLabel="name" [(ngModel)]="winnerExtraResult"
-            ></p-selectButton>
-          </div>
+    <div class="p-field-radiobutton">
+      <p-radioButton name="checkPlayer" value="2Win" [(ngModel)]="extraResult" id="1"
+                     (ngModelChange)="checkRadioButton($event)"></p-radioButton>
+      <label for="1"> 2 gagnants</label>
+    </div>
+    <div class="p-field-radiobutton">
+      <p-radioButton name="checkPlayer" value="1Win1Loose" [(ngModel)]="extraResult" id="2"
+                     (ngModelChange)="checkRadioButton($event)"></p-radioButton>
+      <label for="2"> 1 gagnant / 1 perdant</label>
+      <div *ngIf="showExtraPlayersDialog" style="margin-top: 1.7em">
+        <div class="p-field flex justify-content-around">
+          <label style="font-weight: 600; font-size: 1.1em; padding-right: 0.7em">Vainqueur </label>
+          <p-selectButton [options]="extraFramePlayers" optionLabel="name" [(ngModel)]="winnerExtraResult"
+          ></p-selectButton>
         </div>
       </div>
-      <div class="p-field-radiobutton">
-        <p-radioButton name="checkPlayer" value="2Loose" [(ngModel)]="extraResult" id="3" (ngModelChange)="checkRadioButton($event)"></p-radioButton>
-        <label for="3"> 2 perdants</label>
-      </div>
+    </div>
+    <div class="p-field-radiobutton">
+      <p-radioButton name="checkPlayer" value="2Loose" [(ngModel)]="extraResult" id="3"
+                     (ngModelChange)="checkRadioButton($event)"></p-radioButton>
+      <label for="3"> 2 perdants</label>
+    </div>
     <ng-template pTemplate="footer">
       <div class="flex justify-content-center">
-        <button pButton label="Valider" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-secondary" (click)="validateExtraInfo()" [disabled]="checkValidationExtraDialog()" ></button>
+        <button pButton label="Valider" icon="pi pi-check-circle" iconPos="right"
+                class="p-button-outlined p-button-secondary" (click)="validateExtraInfo()"
+                [disabled]="checkValidationExtraDialog()"></button>
       </div>
     </ng-template>
   </p-dialog>
@@ -108,7 +114,8 @@
     </div>
     <ng-template pTemplate="footer">
       <div class="flex-grow-1">
-        <button pButton label="Terminer" icon="pi pi-check-circle" iconPos="right" class="p-button-outlined p-button-secondary" (click)="end()" ></button>
+        <button pButton label="Terminer" icon="pi pi-check-circle" iconPos="right"
+                class="p-button-outlined p-button-secondary" (click)="end()"></button>
       </div>
     </ng-template>
 
