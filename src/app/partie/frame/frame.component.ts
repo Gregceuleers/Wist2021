@@ -35,7 +35,7 @@ export class FrameComponent implements OnInit {
   showExtraPlayersDialog = false;
   showInfoDialog = false;
   showExtraPointByFold = false;
-  showPlayerFormControl = false;
+  hiddenPlayerFormControl = true;
 
   messageDialog = '';
   messageInfoDialog = '';
@@ -226,6 +226,7 @@ export class FrameComponent implements OnInit {
     this.index++;
 
     this.showExtraInfoDialog = false;
+    this.hiddenPlayerFormControl = true;
   }
 
   checkRadioButton(value: any) {
@@ -255,6 +256,8 @@ export class FrameComponent implements OnInit {
   }
 
   validateGameInfo(): void {
+
+    this.hiddenPlayerFormControl = true;
 
     if (this.isMaldoneOrPasse) {
       this.sendOutputData.emit({
@@ -398,11 +401,14 @@ export class FrameComponent implements OnInit {
   }
 
   verify(event: any): void {
-    this.showPlayerFormControl = false;
+    this.hiddenPlayerFormControl = false;
     if (!this.form?.get('players')?.hasValidator(Validators.required)) {
       this.form?.get('players')?.addValidators(Validators.required);
       this.form?.get('players')?.updateValueAndValidity();
     }
+    this.form?.get('players')?.reset();
+    this.form?.get('players')?.updateValueAndValidity();
+
     switch (event.node.label) {
       case 'Mal done':
         this.isMaldoneOrPasse = true;
@@ -411,7 +417,7 @@ export class FrameComponent implements OnInit {
         this.isMaldoneOrPasse = true;
         this.form?.get('players')?.removeValidators(Validators.required);
         this.form?.get('players')?.updateValueAndValidity();
-        this.showPlayerFormControl = true;
+        this.hiddenPlayerFormControl = true;
         break;
 
     }

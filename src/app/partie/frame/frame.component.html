@@ -17,7 +17,7 @@
 <!--          <p-selectButton [options]="framePlayers" optionLabel="name" formControlName="players" [multiple]="!isAlone()"-->
 <!--          ></p-selectButton>-->
 <!--        </div>-->
-        <div [hidden]="showPlayerFormControl">
+        <div [hidden]="hiddenPlayerFormControl">
           <h4>Joueur(s)</h4>
           <div class="p-field" *ngIf="isAlone()">
             <p-dropdown [options]="framePlayers" optionLabel="name" formControlName="players"
