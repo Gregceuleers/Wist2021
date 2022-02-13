@@ -402,10 +402,12 @@ export class FrameComponent implements OnInit {
 
   verify(event: any): void {
     this.hiddenPlayerFormControl = false;
+
     if (!this.form?.get('players')?.hasValidator(Validators.required)) {
       this.form?.get('players')?.addValidators(Validators.required);
       this.form?.get('players')?.updateValueAndValidity();
     }
+
     this.form?.get('players')?.reset();
     this.form?.get('players')?.updateValueAndValidity();
 
@@ -419,7 +421,6 @@ export class FrameComponent implements OnInit {
         this.form?.get('players')?.updateValueAndValidity();
         this.hiddenPlayerFormControl = true;
         break;
-
     }
   }
 }
