@@ -4,7 +4,7 @@
     <div class="flex justify-content-around">
       <div class="text-center">
         <h3>Manches</h3>
-        <p-knob [(ngModel)]="currentGame.currentFrame" [max]="currentGame.framesNumber" name="Nombre de manches jouées"
+        <p-knob [(ngModel)]="currentGame.currentFrame" [max]="currentGame.framesNumber" [readonly]="true" name="Nombre de manches jouées"
                 valueTemplate="{value}/{{currentGame.framesNumber}}">
 
         </p-knob>
