@@ -91,11 +91,7 @@ export class FrameComponent implements OnInit {
           p.inactive = false;
         }
       }
-    } else {
-      console.log(this.form?.get('players')?.value)
     }
-
-    console.log(this.framePlayers)
   }
 
   getInfoPoints(): any {
@@ -443,7 +439,6 @@ export class FrameComponent implements OnInit {
       this.form?.get('players')?.updateValueAndValidity();
       // }
     }
-    console.log(this.form?.get('players'));
   }
 
   verify(event: any): void {
